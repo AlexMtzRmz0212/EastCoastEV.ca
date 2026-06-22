@@ -1,0 +1,8 @@
+{
+  "builds": [
+    {
+      "src": "eastcoastev/package.json",
+      "use": "@vercel/static-build"
+    }
+  ]
+}
