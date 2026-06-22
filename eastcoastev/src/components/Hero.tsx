@@ -102,7 +102,8 @@ export default function Hero() {
         <div className="scroll-line" />
       </div>
 
-      <div className="hero-stats">
+      {/* Stats */}
+      {/* <div className="hero-stats">
         <div className="container">
           <div className="hero-stats-inner">
             <div className="stat">
@@ -123,7 +124,9 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
+
+
     </section>
   );
 }

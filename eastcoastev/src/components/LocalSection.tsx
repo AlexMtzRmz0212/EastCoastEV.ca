@@ -7,43 +7,43 @@ export default function LocalSection() {
           <div className="local-text reveal-left">
             <div className="section-label">Our Roots</div>
             <h2>Born in the Bay.<br />Built for the <em className="accent">Maritimes.</em></h2>
-            <p>We started in Fredericton because we love this place — its scenic routes, its packed commuter options, and communities that deserve better transport solutions. We're your local electric vehicle experts.</p>
+            <p>We started in Fredericton because we love this place; its scenic routes, its packed commuter options, and communities that deserve better transport solutions. We're your local electric vehicle experts.</p>
             <div className="region-list">
-              <div className="region-item">
+              <a className="region-item" href="https://www.google.com/maps/place/East+Coast+EV/@45.9786595,-66.6542817,17z/data=!4m15!1m8!3m7!1s0x4ca4188b6b32f037:0xd58b8b8c87ca66e6!2s148+Main+St,+Fredericton,+NB+E3A+2B5!3b1!8m2!3d45.9782928!4d-66.654598!16s%2Fg%2F11b8vgb9zq!3m5!1s0x4ca41977adc4c7e7:0xc15110ae25b4c1af!8m2!3d45.9782928!4d-66.654598!16s%2Fg%2F11z68z8rqd?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">
                 <div className="region-dot active" />
                 <div className="region-info">
                   <div className="region-name">Fredericton, NB</div>
                   <div className="region-status">Flagship Location — Open Now</div>
                 </div>
-              </div>
-              <div className="region-item">
+              </a>
+              <a className="region-item" href="https://www.google.com/maps/search/?api=1&query=Moncton,+NB,+Canada" target="_blank" rel="noopener noreferrer">
                 <div className="region-dot soon" />
                 <div className="region-info">
                   <div className="region-name">Moncton, NB</div>
                   <div className="region-status">Future Expansion Planned</div>
                 </div>
-              </div>
-              <div className="region-item">
+              </a>
+              <a className="region-item" href="https://www.google.com/maps/search/?api=1&query=Saint+John,+NB,+Canada" target="_blank" rel="noopener noreferrer">
                 <div className="region-dot soon" />
                 <div className="region-info">
                   <div className="region-name">Saint John, NB</div>
                   <div className="region-status">Future Expansion Planned</div>
                 </div>
-              </div>
-              <div className="region-item">
+              </a>
+              <a className="region-item" href="https://www.google.com/maps/search/?api=1&query=Charlottetown,+PEI,+Canada" target="_blank" rel="noopener noreferrer">
                 <div className="region-dot soon" />
                 <div className="region-info">
                   <div className="region-name">Charlottetown, PEI</div>
                   <div className="region-status">Future Expansion Planned</div>
                 </div>
-              </div>
-              <div className="region-item">
+              </a>
+              <a className="region-item" href="https://www.google.com/maps/search/?api=1&query=Halifax,+NS,+Canada" target="_blank" rel="noopener noreferrer">
                 <div className="region-dot soon" />
                 <div className="region-info">
                   <div className="region-name">Halifax, NS</div>
                   <div className="region-status">Future Expansion Planned</div>
                 </div>
-              </div>
+              </a>
             </div>
             <a href="#contact" className="btn btn-outline">Join Our Community</a>
           </div>
@@ -72,7 +72,7 @@ export default function LocalSection() {
                 stroke="rgba(30,111,224,0.35)"
                 strokeWidth="1.5"
               />
-              <text x="175" y="155" fontFamily="'Orbitron',sans-serif" fontSize="11" fill="rgba(232,238,245,0.6)" fontWeight="700" textAnchor="middle">NB</text>
+              <text x="175" y="155" fontFamily="'Orbitron',sans-serif" fontSize="11" className="map-nb-label" fontWeight="700" textAnchor="middle">NB</text>
 
               {/* PEI */}
               <path

@@ -40,6 +40,18 @@
   --shadow: 0 24px 80px rgba(0,0,0,0.12);
 }
 
+/* Light theme section overrides (sections with hardcoded dark gradients) */
+[data-theme="light"] .hero-bg{
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(30,111,224,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 20% 70%, rgba(181,245,60,0.04) 0%, transparent 50%),
+    linear-gradient(160deg, var(--bg) 0%, var(--bg2) 40%, var(--bg3) 70%, var(--bg) 100%);
+}
+[data-theme="light"] .expansion-section{
+  background:linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
+}
+[data-theme="light"] .map-nb-label{fill:rgba(13,31,48,0.65)}
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
 body{
@@ -349,6 +361,7 @@ nav{display:flex;align-items:center;gap:4px;margin-left:auto}
   transition:var(--transition);
 }
 .region-item:hover{border-color:var(--accent);transform:translateX(4px)}
+a.region-item{text-decoration:none;color:inherit;cursor:pointer;display:flex}
 .region-dot{
   width:10px;height:10px;border-radius:50%;flex-shrink:0;
   position:relative;

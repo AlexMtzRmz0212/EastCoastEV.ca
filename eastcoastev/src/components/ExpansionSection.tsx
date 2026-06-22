@@ -1,12 +1,19 @@
 import { useState } from 'react';
+import { sendEmailNotification } from '../lib/sendNotification';
 
 export default function ExpansionSection() {
   const [email, setEmail] = useState('');
   const [btnText, setBtnText] = useState('Notify Me');
   const [inputError, setInputError] = useState(false);
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (email.includes('@')) {
+      setBtnText('Sending…');
+      try {
+        await sendEmailNotification(email);
+      } catch {
+        // notification failure is silent — subscription UX still completes
+      }
       setBtnText('✓ Subscribed!');
       setEmail('');
       setTimeout(() => setBtnText('Notify Me'), 3000);

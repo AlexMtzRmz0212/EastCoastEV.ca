@@ -79,7 +79,16 @@ export default function TestimonialsSection() {
         <div className="brands-section reveal">
           <div className="brands-label">Brands We Carry &amp; Service</div>
           <div className="brands-scroll">
-            {['Rad Power', 'Trek', 'Specialized', 'Giant', 'Juiced', 'Biktrix', 'Priority', 'Aventon'].map(brand => (
+            {[
+              'NIU', 
+              'E-Ride Pro',
+              'Yozma', 
+              'Strike', 
+              'HeyBike', 
+              // 'Biktrix', 
+              // 'Priority', 
+              // 'Aventon'
+            ].map(brand => (
               <div className="brand-tag" key={brand}>{brand}</div>
             ))}
           </div>

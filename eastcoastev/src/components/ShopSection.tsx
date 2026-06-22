@@ -7,12 +7,14 @@ export default function ShopSection() {
             <div className="section-label reveal">The Shop</div>
             <h2 className="reveal">Your next ride <em className="accent">awaits.</em></h2>
           </div>
-          <a href="#" className="btn btn-ghost reveal" style={{ flexShrink: 0 }}>
+
+          {/* <a href="#" className="btn btn-ghost reveal" style={{ flexShrink: 0 }}>
             View All Products
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </a>
+          </a> */}
+
         </div>
 
         <div className="categories-grid">
@@ -34,12 +36,16 @@ export default function ShopSection() {
                   <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', padding: '2px 8px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px' }}>Mountain</span>
                   <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', padding: '2px 8px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px' }}>Cargo</span>
                 </div>
-                <div className="cat-btn">
+
+
+                {/* <div className="cat-btn">
                   Shop E-Bikes
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                </div>
+                </div> */}
+
+
               </div>
             </div>
           </div>
@@ -57,12 +63,16 @@ export default function ShopSection() {
               <div className="cat-overlay">
                 <div className="cat-eyebrow">Category</div>
                 <div className="cat-title">E-Scooters</div>
-                <div className="cat-btn">
+
+
+                {/* <div className="cat-btn">
                   Shop Scooters
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                </div>
+                </div> */}
+
+
               </div>
             </div>
           </div>
@@ -81,12 +91,16 @@ export default function ShopSection() {
               <div className="cat-overlay">
                 <div className="cat-eyebrow">Category</div>
                 <div className="cat-title">E-Trikes &amp; Mobility</div>
-                <div className="cat-btn">
+
+
+                {/* <div className="cat-btn">
                   Shop Mobility
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                </div>
+                </div> */}  
+
+
               </div>
             </div>
           </div>
@@ -102,12 +116,16 @@ export default function ShopSection() {
               <div className="cat-overlay">
                 <div className="cat-eyebrow">Category</div>
                 <div className="cat-title">Accessories &amp; Gear</div>
-                <div className="cat-btn">
+
+
+                {/* <div className="cat-btn">
                   Shop Gear
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                </div>
+                </div> */}
+
+
               </div>
             </div>
           </div>
@@ -115,6 +133,8 @@ export default function ShopSection() {
 
         {/* Rentals Teaser */}
         <div className="rentals-teaser" id="explore">
+
+          {/* Test Ride */}
           <div className="rental-card reveal">
             <div className="rental-badge">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12">
@@ -126,7 +146,9 @@ export default function ShopSection() {
             <p>Not sure which ride is right for you? Book a test ride at our storefront location. No pressure, just pure electric fun.</p>
             <a href="#contact" className="btn btn-outline">Book a Test Ride</a>
           </div>
-          <div className="rental-card reveal" style={{ transitionDelay: '0.1s' }}>
+
+          {/* Rentals */}
+          {/* <div className="rental-card reveal" style={{ transitionDelay: '0.1s' }}>
             <div className="rental-badge">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12">
                 <circle cx="12" cy="12" r="10" />
@@ -137,7 +159,8 @@ export default function ShopSection() {
             <h3>Rent for a Day or a Week</h3>
             <p>Exploring local paths or heading out on an urban adventure? We've got short and long-term rental options to fuel your journey.</p>
             <a href="#contact" className="btn btn-outline">View Rental Options</a>
-          </div>
+          </div> */}
+
         </div>
       </div>
     </section>
