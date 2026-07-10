@@ -13,6 +13,7 @@
   --accent: #b5f53c;
   --accent-glow: rgba(181,245,60,0.25);
   --accent-dim: rgba(181,245,60,0.08);
+  --on-accent: #050c14;
   --blue: #1e6fe0;
   --blue-light: #5ba3f5;
   --slate: #2a4a65;
@@ -35,7 +36,12 @@
   --text: #0d1f30;
   --text-muted: #456278;
   --text-dim: #8aafc4;
+  --accent: #4d7c0f;
+  --accent-glow: rgba(77,124,15,0.25);
+  --accent-dim: rgba(77,124,15,0.07);
+  --on-accent: #ffffff;
   --border: rgba(0,0,0,0.08);
+  --border-accent: rgba(77,124,15,0.4);
   --slate: #c8dae8;
   --shadow: 0 24px 80px rgba(0,0,0,0.12);
 }
@@ -50,7 +56,27 @@
 [data-theme="light"] .expansion-section{
   background:linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
 }
-[data-theme="light"] .map-nb-label{fill:rgba(13,31,48,0.65)}
+/* The map and workshop panels are illustrations — keep them dark in light theme,
+   so their hardcoded lime artwork stays readable */
+[data-theme="light"] .map-container{
+  background:#0d2035;
+  border-color:rgba(255,255,255,0.08);
+}
+[data-theme="light"] .map-container .map-nb-label{fill:rgba(232,238,245,0.7)}
+[data-theme="light"] .cat-card:hover{box-shadow:0 20px 60px rgba(13,31,48,0.18)}
+[data-theme="light"] .ribbon-sep{color:rgba(255,255,255,0.45)}
+/* These panels have hardcoded dark backgrounds in both themes —
+   re-pin the dark palette so their accents/text stay readable in light mode */
+.service-image,.cat-overlay,.map-container,.insta-tile{
+  --accent:#b5f53c;
+  --accent-glow:rgba(181,245,60,0.25);
+  --accent-dim:rgba(181,245,60,0.08);
+  --border-accent:rgba(181,245,60,0.3);
+  --on-accent:#050c14;
+  --text:#e8eef5;
+  --text-muted:#7d9ab5;
+  color:var(--text);
+}
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
@@ -108,7 +134,7 @@ button{cursor:pointer;font-family:var(--font-body);border:none;background:none}
 }
 .btn:hover::after{transform:translateX(200%) skewX(-15deg)}
 .btn-primary{
-  background:var(--accent);color:#050c14;
+  background:var(--accent);color:var(--on-accent);
   box-shadow:0 0 0 0 var(--accent-glow);
 }
 .btn-primary:hover{
@@ -119,7 +145,7 @@ button{cursor:pointer;font-family:var(--font-body);border:none;background:none}
   border:1px solid var(--border-accent);color:var(--accent);
   background:var(--accent-dim);
 }
-.btn-outline:hover{background:var(--accent);color:#050c14;box-shadow:0 0 30px 4px var(--accent-glow)}
+.btn-outline:hover{background:var(--accent);color:var(--on-accent);box-shadow:0 0 30px 4px var(--accent-glow)}
 .btn-ghost{
   border:1px solid var(--border);color:var(--text);
   background:transparent;
@@ -166,7 +192,7 @@ header.scrolled{
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
-.logo-icon svg{width:20px;height:20px;color:#050c14}
+.logo-icon svg{width:20px;height:20px;color:var(--on-accent)}
 .logo span{color:var(--accent)}
 nav{display:flex;align-items:center;gap:4px;margin-left:auto}
 .nav-link{
@@ -264,7 +290,7 @@ nav{display:flex;align-items:center;gap:4px;margin-left:auto}
   width:22px;height:22px;border-radius:50%;background:var(--accent);
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
-.hero-eyebrow .dot::after{content:'';width:6px;height:6px;border-radius:50%;background:#050c14}
+.hero-eyebrow .dot::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--on-accent)}
 .hero-title{
   font-family:var(--font-head);
   font-size:clamp(2.8rem,7vw,5.5rem);
@@ -620,7 +646,7 @@ a.region-item{text-decoration:none;color:inherit;cursor:pointer;display:flex}
 .author-avatar{
   width:40px;height:40px;border-radius:50%;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:#050c14;
+  font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:var(--on-accent);
 }
 .author-name{font-size:0.85rem;font-weight:600}
 .author-role{font-size:0.72rem;color:var(--text-muted)}
@@ -693,7 +719,7 @@ footer{
 }
 .footer-newsletter input:focus{outline:none;border-color:var(--accent)}
 .footer-newsletter button{
-  padding:10px 16px;background:var(--accent);color:#050c14;
+  padding:10px 16px;background:var(--accent);color:var(--on-accent);
   border-radius:var(--radius);font-size:0.75rem;font-weight:700;
   font-family:var(--font-head);letter-spacing:0.08em;white-space:nowrap;
   transition:var(--transition);
@@ -735,7 +761,7 @@ footer{
    ANNOUNCEMENT RIBBON
    ============================================================ */
 .ribbon{
-  background:var(--accent);color:#050c14;
+  background:var(--accent);color:var(--on-accent);
   padding:10px 0;overflow:hidden;
   font-family:var(--font-head);font-size:0.68rem;letter-spacing:0.15em;
   text-transform:uppercase;font-weight:700;
