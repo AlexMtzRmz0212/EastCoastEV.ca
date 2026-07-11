@@ -1,4 +1,12 @@
+import { Link } from 'react-router-dom';
+import { getBrands } from '../lib/catalog';
+import { useCatalog } from '../hooks/useCatalog';
+
+const FALLBACK_BRANDS = ['NIU', 'E-Ride Pro', 'Yozma', 'Univelo', 'Strike', 'HeyBike'];
+
 export default function TestimonialsSection() {
+  const { data: brands } = useCatalog(getBrands);
+
   return (
     <section className="testimonials-section">
       <div className="container">
@@ -13,13 +21,14 @@ export default function TestimonialsSection() {
           <div className="testimonial reveal" style={{ transitionDelay: '0.05s' }}>
             <div className="stars">★★★★★</div>
             <p className="testimonial-text">
-              "My Rad Power e-bike turns my commute to UNB into the best part of my day. EastCoastEV had me set up and riding in under an hour, with a full gear kit and a route suggestion. These people know what they're doing."
+              "It’s great to finally have a place in Fredericton where you can get your scooter serviced locally. They were knowledgeable, professional, and made the whole experience easy from start to finish. I can confidently say I’ll be back for future service and purchases.
+              If you’re in the market for an e-bike or a high-quality electric scooter, look no further. Highly recommend!"
             </p>
             <div className="testimonial-author">
-              <div className="author-avatar" style={{ background: 'var(--accent)' }}>SM</div>
+              <div className="author-avatar" style={{ background: 'var(--accent)' }}>JS</div>
               <div>
-                <div className="author-name">Sarah M.</div>
-                <div className="author-role">Commuter · Fredericton</div>
+                <div className="author-name">Jordan Stone</div>
+                {/* <div className="author-role">Commuter · Fredericton</div> */}
               </div>
             </div>
           </div>
@@ -27,13 +36,13 @@ export default function TestimonialsSection() {
           <div className="testimonial reveal" style={{ transitionDelay: '0.12s' }}>
             <div className="stars">★★★★★</div>
             <p className="testimonial-text">
-              "I bought an e-trike for my dad who has mobility issues. The team here was patient, knowledgeable, and they even did a home delivery so he could try it on his street. He's out every morning now. Life-changing."
+              "Very Professional, scooter charger had stopped working they honored warranty instantly and exchanged for a new one."
             </p>
             <div className="testimonial-author">
-              <div className="author-avatar" style={{ background: 'var(--blue)' }}>RD</div>
+              <div className="author-avatar" style={{ background: 'var(--blue)' }}>SD</div>
               <div>
-                <div className="author-name">Rachel D.</div>
-                <div className="author-role">Family Buyer · Fredericton</div>
+                <div className="author-name">Skylar Dutcher</div>
+                {/* <div className="author-role">Family Buyer · Fredericton</div> */}
               </div>
             </div>
           </div>
@@ -41,13 +50,13 @@ export default function TestimonialsSection() {
           <div className="testimonial reveal" style={{ transitionDelay: '0.2s' }}>
             <div className="stars">★★★★★</div>
             <p className="testimonial-text">
-              "Brought in my Specialized Turbo for a diagnostic and they had it sorted in one day. Fair pricing, no BS. I've had it serviced at dealers in Toronto and honestly EastCoastEV is better. Proud to support a local shop."
+              "Looking forward to getting my first e scooter through Andrew and his Team! What an all around best experience I hope folks in the area come by to see. Thank you. All the best!"              
             </p>
             <div className="testimonial-author">
-              <div className="author-avatar" style={{ background: '#2d5a3a' }}>TL</div>
+              <div className="author-avatar" style={{ background: '#2d5a3a' }}>JH</div>
               <div>
-                <div className="author-name">Thomas L.</div>
-                <div className="author-role">Adventurer · Fredericton</div>
+                <div className="author-name">Jordan Hunter</div>
+                {/* <div className="author-role">Adventurer · Fredericton</div> */}
               </div>
             </div>
           </div>
@@ -79,18 +88,19 @@ export default function TestimonialsSection() {
         <div className="brands-section reveal">
           <div className="brands-label">Brands We Carry &amp; Service</div>
           <div className="brands-scroll">
-            {[
-              'NIU', 
-              'E-Ride Pro',
-              'Yozma', 
-              'Strike', 
-              'HeyBike', 
-              // 'Biktrix', 
-              // 'Priority', 
-              // 'Aventon'
-            ].map(brand => (
-              <div className="brand-tag" key={brand}>{brand}</div>
-            ))}
+            {brands && brands.length > 0
+              ? brands.map(brand => (
+                  <Link
+                    to={`/shop?brand=${brand.slug}`}
+                    className="brand-tag"
+                    key={brand.id}
+                  >
+                    {brand.name}
+                  </Link>
+                ))
+              : FALLBACK_BRANDS.map(brand => (
+                  <div className="brand-tag" key={brand}>{brand}</div>
+                ))}
           </div>
         </div>
       </div>

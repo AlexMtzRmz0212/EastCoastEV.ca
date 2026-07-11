@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function ShopSection() {
   return (
     <section className="shop-section" id="shop">
@@ -8,18 +10,18 @@ export default function ShopSection() {
             <h2 className="reveal">Your next ride <em className="accent">awaits.</em></h2>
           </div>
 
-          {/* <a href="#" className="btn btn-ghost reveal" style={{ flexShrink: 0 }}>
+          <Link to="/shop" className="btn btn-ghost reveal" style={{ flexShrink: 0 }}>
             View All Products
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </a> */}
+          </Link>
 
         </div>
 
         <div className="categories-grid">
           {/* E-Bikes */}
-          <div className="cat-card reveal" style={{ transitionDelay: '0.05s' }}>
+          <Link to="/shop?category=e-bikes" className="cat-card reveal" style={{ transitionDelay: '0.05s' }}>
             <div className="cat-placeholder cat-bg-1">
               <div className="cat-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
@@ -37,21 +39,19 @@ export default function ShopSection() {
                   <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', padding: '2px 8px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px' }}>Cargo</span>
                 </div>
 
-
-                {/* <div className="cat-btn">
+                <div className="cat-btn">
                   Shop E-Bikes
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                </div> */}
-
+                </div>
 
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* E-Scooters */}
-          <div className="cat-card reveal" style={{ transitionDelay: '0.1s' }}>
+          <Link to="/shop?category=e-scooters" className="cat-card reveal" style={{ transitionDelay: '0.1s' }}>
             <div className="cat-placeholder cat-bg-2">
               <div className="cat-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
@@ -64,21 +64,19 @@ export default function ShopSection() {
                 <div className="cat-eyebrow">Category</div>
                 <div className="cat-title">E-Scooters</div>
 
-
-                {/* <div className="cat-btn">
+                <div className="cat-btn">
                   Shop Scooters
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                </div> */}
-
+                </div>
 
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* E-Trikes / Mobility */}
-          <div className="cat-card reveal" style={{ transitionDelay: '0.15s' }}>
+          <Link to="/shop?category=e-trikes" className="cat-card reveal" style={{ transitionDelay: '0.15s' }}>
             <div className="cat-placeholder cat-bg-3">
               <div className="cat-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
@@ -92,43 +90,41 @@ export default function ShopSection() {
                 <div className="cat-eyebrow">Category</div>
                 <div className="cat-title">E-Trikes &amp; Mobility</div>
 
-
-                {/* <div className="cat-btn">
+                <div className="cat-btn">
                   Shop Mobility
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                </div> */}  
-
+                </div>
 
               </div>
             </div>
-          </div>
+          </Link>
 
-          {/* Accessories */}
-          <div className="cat-card reveal" style={{ transitionDelay: '0.2s' }}>
+          {/* E-Dirt Bikes */}
+          <Link to="/shop?category=e-dirt-bikes" className="cat-card reveal" style={{ transitionDelay: '0.2s' }}>
             <div className="cat-placeholder cat-bg-4">
               <div className="cat-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  <circle cx="5" cy="17" r="3.5" />
+                  <circle cx="19" cy="17" r="3.5" />
+                  <path d="M5 17l4-7h5l-2-4h3M14 10l5 7M9 10h7" />
                 </svg>
               </div>
               <div className="cat-overlay">
                 <div className="cat-eyebrow">Category</div>
-                <div className="cat-title">Accessories &amp; Gear</div>
+                <div className="cat-title">E-Dirt Bikes</div>
 
-
-                {/* <div className="cat-btn">
-                  Shop Gear
+                <div className="cat-btn">
+                  Shop Dirt Bikes
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                </div> */}
-
+                </div>
 
               </div>
             </div>
-          </div>
+          </Link>
         </div>
 
         {/* Rentals Teaser */}
@@ -144,7 +140,7 @@ export default function ShopSection() {
             </div>
             <h3>Try Before You Buy</h3>
             <p>Not sure which ride is right for you? Book a test ride at our storefront location. No pressure, just pure electric fun.</p>
-            <a href="#contact" className="btn btn-outline">Book a Test Ride</a>
+            <Link to="/contact" className="btn btn-outline">Book a Test Ride</Link>
           </div>
 
           {/* Rentals */}

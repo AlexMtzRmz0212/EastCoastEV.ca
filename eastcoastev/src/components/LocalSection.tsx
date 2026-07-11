@@ -1,4 +1,14 @@
-export default function LocalSection() {
+import { Link } from 'react-router-dom';
+
+interface LocalSectionProps {
+  ctaTo?: string;
+  ctaLabel?: string;
+}
+
+export default function LocalSection({
+  ctaTo = '/contact',
+  ctaLabel = 'Join Our Community',
+}: LocalSectionProps) {
   return (
     <section className="local-section" id="story">
       <div className="container">
@@ -20,32 +30,32 @@ export default function LocalSection() {
                 <div className="region-dot soon" />
                 <div className="region-info">
                   <div className="region-name">Moncton, NB</div>
-                  <div className="region-status">Future Expansion Planned</div>
+                  <div className="region-status">Someday, maybe</div>
                 </div>
               </a>
               <a className="region-item" href="https://www.google.com/maps/search/?api=1&query=Saint+John,+NB,+Canada" target="_blank" rel="noopener noreferrer">
                 <div className="region-dot soon" />
                 <div className="region-info">
                   <div className="region-name">Saint John, NB</div>
-                  <div className="region-status">Future Expansion Planned</div>
+                  <div className="region-status">Someday, maybe</div>
                 </div>
               </a>
               <a className="region-item" href="https://www.google.com/maps/search/?api=1&query=Charlottetown,+PEI,+Canada" target="_blank" rel="noopener noreferrer">
                 <div className="region-dot soon" />
                 <div className="region-info">
                   <div className="region-name">Charlottetown, PEI</div>
-                  <div className="region-status">Future Expansion Planned</div>
+                  <div className="region-status">Someday, maybe</div>
                 </div>
               </a>
               <a className="region-item" href="https://www.google.com/maps/search/?api=1&query=Halifax,+NS,+Canada" target="_blank" rel="noopener noreferrer">
                 <div className="region-dot soon" />
                 <div className="region-info">
                   <div className="region-name">Halifax, NS</div>
-                  <div className="region-status">Future Expansion Planned</div>
+                  <div className="region-status">Someday, maybe</div>
                 </div>
               </a>
             </div>
-            <a href="#contact" className="btn btn-outline">Join Our Community</a>
+            <Link to={ctaTo} className="btn btn-outline">{ctaLabel}</Link>
           </div>
 
           {/* SVG Map */}
@@ -122,7 +132,7 @@ export default function LocalSection() {
               {/* Pin: PEI */}
               <g className="map-pin" transform="translate(328,95)">
                 <circle cx="0" cy="0" r="4" fill="rgba(181,245,60,0.3)" stroke="rgba(181,245,60,0.3)" strokeWidth="1" strokeDasharray="2,2" />
-                <text x="0" y="16" fontFamily="'Orbitron',sans-serif" fontSize="6" fill="rgba(181,245,60,0.5)" textAnchor="middle">FUTURE SITE</text>
+                <text x="0" y="16" fontFamily="'Orbitron',sans-serif" fontSize="6" fill="rgba(181,245,60,0.5)" textAnchor="middle">SOMEDAY</text>
               </g>
 
               {/* Pin: Halifax */}

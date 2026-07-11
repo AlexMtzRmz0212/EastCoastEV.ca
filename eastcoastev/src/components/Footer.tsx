@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { sendEmailNotification } from '../lib/sendNotification';
 
 export default function Footer() {
@@ -57,23 +58,23 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Shop</h4>
             <div className="footer-links">
-              <a href="#" className="footer-link">E-Bikes</a>
-              <a href="#" className="footer-link">E-Scooters</a>
-              <a href="#" className="footer-link">E-Trikes &amp; Mobility</a>
-              <a href="#" className="footer-link">Accessories</a>
-              <a href="#" className="footer-link">Financing</a>
+              <Link to="/shop?category=e-bikes" className="footer-link">E-Bikes</Link>
+              <Link to="/shop?category=e-scooters" className="footer-link">E-Scooters</Link>
+              <Link to="/shop?category=e-dirt-bikes" className="footer-link">E-Dirt Bikes</Link>
+              <Link to="/shop?category=e-trikes" className="footer-link">E-Trikes &amp; Mobility</Link>
+              <Link to="/shop" className="footer-link">All Products</Link>
             </div>
           </div>
 
-          {/* Services column */}
+          {/* Company column */}
           <div className="footer-col">
-            <h4>Services</h4>
+            <h4>Company</h4>
             <div className="footer-links">
-              <a href="#" className="footer-link">Book a Service</a>
-              <a href="#" className="footer-link">Battery Diagnostics</a>
-              <a href="#" className="footer-link">Seasonal Tune-Up</a>
-              <a href="#" className="footer-link">Mobile Repair</a>
-              <a href="#" className="footer-link">Test Rides</a>
+              <Link to="/service" className="footer-link">Service &amp; Repair</Link>
+              <Link to="/locations" className="footer-link">Locations</Link>
+              <Link to="/about" className="footer-link">Our Story</Link>
+              <Link to="/contact" className="footer-link">Contact</Link>
+              <Link to="/contact" className="footer-link">Book a Test Ride</Link>
             </div>
           </div>
 
@@ -117,6 +118,18 @@ export default function Footer() {
           <div className="footer-copy">
             © 2026 EastCoastEV Ltd. All rights reserved.{' '}
             <span style={{ color: 'var(--text-dim)' }}>· Fredericton, NB</span>
+          </div>
+
+          <div className="dev-credit">
+            <span className="dev-credit-mark">&lt;/&gt;</span>
+            <span>Designed &amp; built by</span>
+            <a href="https://alex.bittobyte.qzz.io" target="_blank" rel="noopener noreferrer">
+              Alex Martínez
+            </a>
+            <span className="dev-credit-dot">·</span>
+            <a href="https://bittobyte.qzz.io" target="_blank" rel="noopener noreferrer">
+              BittoByte
+            </a>
           </div>
 
           {/* <div className="social-links">

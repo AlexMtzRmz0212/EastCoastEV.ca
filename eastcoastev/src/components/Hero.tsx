@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   const particlesRef = useRef<HTMLDivElement>(null);
@@ -86,13 +87,13 @@ export default function Hero() {
             Your premier source for e-bikes, scooters, and mobility in Fredericton. Sales, expert service, and the gear to get you there.
           </p>
           <div className="hero-ctas">
-            <a href="#shop" className="btn btn-primary">
+            <Link to="/shop" className="btn btn-primary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
               Find Your Ride
-            </a>
-            <a href="#service" className="btn btn-outline">Schedule a Test Ride</a>
+            </Link>
+            <Link to="/contact" className="btn btn-outline">Schedule a Test Ride</Link>
           </div>
         </div>
       </div>

@@ -1,4 +1,14 @@
-export default function ServiceSection() {
+import { Link } from 'react-router-dom';
+
+interface ServiceSectionProps {
+  ctaTo?: string;
+  ctaLabel?: string;
+}
+
+export default function ServiceSection({
+  ctaTo = '/contact',
+  ctaLabel = 'Book Your Service Appointment',
+}: ServiceSectionProps) {
   return (
     <section className="service-section" id="service">
       <div className="container">
@@ -86,13 +96,13 @@ export default function ServiceSection() {
               </div>
             </div>
 
-            <a href="#contact" className="btn btn-primary">
+            <Link to={ctaTo} className="btn btn-primary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
                 <rect x="3" y="4" width="18" height="18" rx="2" />
                 <path d="M16 2v4M8 2v4M3 10h18" />
               </svg>
-              Book Your Service Appointment
-            </a>
+              {ctaLabel}
+            </Link>
           </div>
         </div>
       </div>

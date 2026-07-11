@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
   isDark: boolean;
@@ -43,14 +44,15 @@ export default function Header({ isDark, onThemeToggle }: HeaderProps) {
     <>
       {/* Mobile Nav */}
       <div className={`mobile-nav${navOpen ? ' open' : ''}`} id="mobileNav">
-        <a className="nav-link" href="#shop" onClick={closeNav}>Shop</a>
-        <a className="nav-link" href="#service" onClick={closeNav}>Service &amp; Repair</a>
-        <a className="nav-link" href="#explore" onClick={closeNav}>Explore</a>
-        <a className="nav-link" href="#story" onClick={closeNav}>Our Story</a>
-        <a className="nav-link" href="#contact" onClick={closeNav}>Contact</a>
+        <Link className="nav-link" to="/" onClick={closeNav}>Home</Link>
+        <Link className="nav-link" to="/shop" onClick={closeNav}>Shop</Link>
+        <Link className="nav-link" to="/service" onClick={closeNav}>Service &amp; Repair</Link>
+        <Link className="nav-link" to="/locations" onClick={closeNav}>Locations</Link>
+        <Link className="nav-link" to="/about" onClick={closeNav}>About</Link>
+        <Link className="nav-link" to="/contact" onClick={closeNav}>Contact</Link>
         <div className="mobile-nav-ctas">
-          <a href="#service" className="btn btn-outline" onClick={closeNav}>Book Service</a>
-          <a href="#shop" className="btn btn-primary" onClick={closeNav}>Shop Now</a>
+          <Link to="/service" className="btn btn-outline" onClick={closeNav}>Book Service</Link>
+          <Link to="/shop" className="btn btn-primary" onClick={closeNav}>Shop Now</Link>
         </div>
       </div>
 
@@ -58,24 +60,25 @@ export default function Header({ isDark, onThemeToggle }: HeaderProps) {
       <header id="header" className={scrolled ? 'scrolled' : ''}>
         <div className="container">
           <div className="header-inner">
-            <a href="#" className="logo">
+            <Link to="/" className="logo">
               <div className="logo-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5" />
                 </svg>
               </div>
               <span>EastCoast<span>EV</span></span>
-            </a>
+            </Link>
 
             <nav>
-              <a href="#shop" className="nav-link">Shop</a>
-              <a href="#service" className="nav-link">Service &amp; Repair</a>
-              <a href="#explore" className="nav-link">Explore</a>
-              <a href="#story" className="nav-link">Our Story</a>
-              <a href="#contact" className="nav-link">Contact</a>
+              <Link to="/" className="nav-link">Home</Link>
+              <Link to="/shop" className="nav-link">Shop</Link>
+              <Link to="/service" className="nav-link">Service</Link>
+              <Link to="/locations" className="nav-link">Locations</Link>
+              <Link to="/about" className="nav-link">About</Link>
+              <Link to="/contact" className="nav-link">Contact</Link>
             </nav>
 
-            <div className="header-badge">Now Serving Fredericton &nbsp;·&nbsp; Future Expansion Planned</div>
+            <div className="header-badge">Now Serving Fredericton, NB</div>
 
             <div className="header-ctas">
               <button
@@ -87,12 +90,12 @@ export default function Header({ isDark, onThemeToggle }: HeaderProps) {
                   {isDark ? sunSVG : moonSVG}
                 </svg>
               </button>
-              <a href="#service" className="btn btn-outline" style={{ fontSize: '0.68rem', padding: '10px 18px' }}>
+              <Link to="/service" className="btn btn-outline" style={{ fontSize: '0.68rem', padding: '10px 18px' }}>
                 Book Service
-              </a>
-              <a href="#shop" className="btn btn-primary" style={{ fontSize: '0.68rem', padding: '10px 18px' }}>
+              </Link>
+              <Link to="/shop" className="btn btn-primary" style={{ fontSize: '0.68rem', padding: '10px 18px' }}>
                 Shop Now
-              </a>
+              </Link>
               <button
                 className="mobile-menu-btn"
                 id="menuBtn"

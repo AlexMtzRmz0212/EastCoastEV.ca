@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { sendEmailNotification } from '../lib/sendNotification';
 
 export default function ExpansionSection() {
@@ -28,9 +29,9 @@ export default function ExpansionSection() {
       <div className="container">
         <div className="expansion-grid">
           <div className="expansion-text reveal-left">
-            <div className="section-label">Expansion</div>
-            <h2>Headed your way. <em className="accent">We're growing.</em></h2>
-            <p>We're planning to bring EastCoastEV to more cities across the Maritimes in the future. Sign up to be the first to know — and first to ride — when we launch in your area.</p>
+            <div className="section-label">A Someday Dream</div>
+            <h2>Maybe one day, <em className="accent">beyond the Bay.</em></h2>
+            <p>Growing past Fredericton is a someday dream — not a plan or a promise. But if enough riders in a city put their hand up, who knows where the road leads. Leave your email and we'll remember you.</p>
             <div className="expansion-form">
               <input
                 type="email"
@@ -49,8 +50,8 @@ export default function ExpansionSection() {
               </button>
             </div>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginTop: '12px' }}>
-              We're also looking for local brand ambassadors and commercial space leads.{' '}
-              <a href="#contact" style={{ color: 'var(--accent)' }}>Get in touch →</a>
+              Dream as big as we do? We'd love to hear from fellow riders.{' '}
+              <Link to="/contact" style={{ color: 'var(--accent)' }}>Get in touch →</Link>
             </p>
           </div>
 
@@ -59,25 +60,25 @@ export default function ExpansionSection() {
               <div className="exp-loc-icon">NB</div>
               <div className="exp-loc-text">
                 <strong>Moncton &amp; Saint John, NB</strong>
-                <span>Evaluating strategic hubs on the coast</span>
+                <span>Wouldn't it be nice, one day?</span>
               </div>
-              <div className="exp-loc-badge">TBD</div>
+              <div className="exp-loc-badge">Someday</div>
             </div>
             <div className="exp-loc">
               <div className="exp-loc-icon">PEI</div>
               <div className="exp-loc-text">
                 <strong>Charlottetown, PEI</strong>
-                <span>Perfect for future trail riders</span>
+                <span>Island rides — a lovely daydream</span>
               </div>
-              <div className="exp-loc-badge">TBD</div>
+              <div className="exp-loc-badge">Someday</div>
             </div>
             <div className="exp-loc">
               <div className="exp-loc-icon">NS</div>
               <div className="exp-loc-text">
                 <strong>Halifax, Nova Scotia</strong>
-                <span>Commuter demand is high — we're listening</span>
+                <span>A big-city someday, if the stars align</span>
               </div>
-              <div className="exp-loc-badge">TBD</div>
+              <div className="exp-loc-badge">Someday</div>
             </div>
           </div>
         </div>

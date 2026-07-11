@@ -1,7 +1,7 @@
 export default function Ribbon() {
   const items = (
     <span>
-      E-Bikes &nbsp;<span className="ribbon-sep">◆</span>&nbsp; E-Scooters &nbsp;<span className="ribbon-sep">◆</span>&nbsp; E-Trikes &nbsp;<span className="ribbon-sep">◆</span>&nbsp; Mobility Aids &nbsp;<span className="ribbon-sep">◆</span>&nbsp; Expert Service &nbsp;<span className="ribbon-sep">◆</span>&nbsp; Fredericton, NB &nbsp;<span className="ribbon-sep">◆</span>&nbsp; Future Expansion Planned &nbsp;<span className="ribbon-sep">◆</span>&nbsp;
+      E-Bikes &nbsp;<span className="ribbon-sep">◆</span>&nbsp; E-Scooters &nbsp;<span className="ribbon-sep">◆</span>&nbsp; E-Trikes &nbsp;<span className="ribbon-sep">◆</span>&nbsp; Mobility Aids &nbsp;<span className="ribbon-sep">◆</span>&nbsp; Expert Service &nbsp;<span className="ribbon-sep">◆</span>&nbsp; Fredericton, NB &nbsp;<span className="ribbon-sep">◆</span>&nbsp; Test Rides Welcome &nbsp;<span className="ribbon-sep">◆</span>&nbsp;
     </span>
   );
 
