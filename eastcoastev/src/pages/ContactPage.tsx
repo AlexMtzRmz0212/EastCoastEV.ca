@@ -65,7 +65,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <h4>Email</h4>
-                <p><a href="mailto:eastcoastev.ca@gmail.com" className="contact-link">eastcoastev.ca@gmail.com</a></p>
+                <p><a href="mailto:info@eastcoastev.ca" className="contact-link">info@eastcoastev.ca</a></p>
               </div>
             </div>
 
