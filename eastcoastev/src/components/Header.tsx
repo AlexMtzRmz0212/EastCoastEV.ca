@@ -62,8 +62,8 @@ export default function Header({ isDark, onThemeToggle }: HeaderProps) {
           <div className="header-inner">
             <Link to="/" className="logo">
               <div className="logo-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5" />
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <path d="M13 2 3 14h8l-1 8 11-12h-8l0-8z" />
                 </svg>
               </div>
               <span>EastCoast<span>EV</span></span>

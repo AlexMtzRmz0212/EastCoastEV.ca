@@ -32,8 +32,8 @@ export default function Footer() {
           <div className="footer-brand">
             <div className="logo" style={{ fontSize: '1rem', marginBottom: '16px' }}>
               <div className="logo-icon" style={{ width: '30px', height: '30px' }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: '16px', height: '16px' }}>
-                  <path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5" />
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" style={{ width: '16px', height: '16px' }}>
+                  <path d="M13 2 3 14h8l-1 8 11-12h-8l0-8z" />
                 </svg>
               </div>
               EastCoast<span>EV</span>
