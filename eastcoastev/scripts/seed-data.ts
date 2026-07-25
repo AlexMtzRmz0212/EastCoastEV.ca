@@ -104,7 +104,7 @@ export const PRODUCTS: SeedProduct[] = [
     tagline: 'The reliable everyday commuter.',
     description:
       'A dependable, no-fuss electric kick scooter with a comfortable ride and app connectivity, a great first e-scooter for getting around the city.',
-    priceCents: null,
+    priceCents: 699.00 * 100,
     isFeatured: false,
     specs: { Range: 'Up to 40 km', 'Top speed': '25 km/h', Motor: '300W', 'Tire size': '10"' },
     colors: [C.silver],
@@ -174,7 +174,7 @@ export const PRODUCTS: SeedProduct[] = [
     tagline: 'Dual suspension, all terrain.',
     description:
       'A rugged dual-suspension kick scooter built to smooth out rough roads and handle longer, more adventurous rides.',
-    priceCents: null,
+    priceCents: 1129.00 * 100,
     isFeatured: false,
     specs: { Range: 'Up to 60 km', 'Top speed': '32 km/h', Suspension: 'Front & rear', 'Tire size': '10.5"' },
     colors: [C.grey],
@@ -246,7 +246,7 @@ export const PRODUCTS: SeedProduct[] = [
     tagline: 'The next-gen SS.',
     description:
       'The evolution of the SS platform with upgraded components and seat options, with more refinement for demanding trail days.',
-    priceCents: null,
+    priceCents: 6800.00 * 100,
     isFeatured: false,
     specs: { Battery: '72V 50Ah', Motor: 'High-output mid-drive', Seat: 'Long / short options', Brakes: 'Racing hydraulic disc' },
     colors: [C.black],

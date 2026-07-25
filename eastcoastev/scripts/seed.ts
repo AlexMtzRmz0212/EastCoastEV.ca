@@ -172,9 +172,20 @@ async function seedProduct(
     },
   );
 
-  // 2. Replace colors + images for a clean re-run.
-  await db.from('product_images').delete().eq('product_id', productId);
-  await db.from('product_colors').delete().eq('product_id', productId);
+  // 2. Replace colors + images for a clean re-run. Check the errors: deleting a
+  //    color is blocked while a reservation still references it (reservations
+  //    must use ON DELETE SET NULL for this to succeed), and a swallowed failure
+  //    here resurfaces as a confusing duplicate-key error on the re-insert below.
+  const { error: delImagesError } = await db
+    .from('product_images')
+    .delete()
+    .eq('product_id', productId);
+  if (delImagesError) throw new Error(`delete images → ${delImagesError.message}`);
+  const { error: delColorsError } = await db
+    .from('product_colors')
+    .delete()
+    .eq('product_id', productId);
+  if (delColorsError) throw new Error(`delete colors → ${delColorsError.message}`);
 
   const colorIds: Record<string, string> = {};
   for (let i = 0; i < product.colors.length; i++) {

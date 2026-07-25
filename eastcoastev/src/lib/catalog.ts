@@ -7,12 +7,11 @@ export function imageUrl(storagePath: string): string {
 
 export function formatPrice(cents: number | null): string {
   if (cents == null) return 'Contact for price';
-  const whole = cents % 100 === 0;
   return new Intl.NumberFormat('en-CA', {
     style: 'currency',
     currency: 'CAD',
-    minimumFractionDigits: whole ? 0 : 2,
-    maximumFractionDigits: whole ? 0 : 2,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(cents / 100);
 }
 

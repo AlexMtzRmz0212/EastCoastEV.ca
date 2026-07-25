@@ -60,7 +60,7 @@ create table if not exists product_images (
 create table if not exists reservations (
   id uuid primary key default gen_random_uuid(),
   product_id uuid not null references products(id),
-  color_id uuid references product_colors(id),
+  color_id uuid references product_colors(id) on delete set null,
   customer_name text not null,
   email text not null,
   phone text,
