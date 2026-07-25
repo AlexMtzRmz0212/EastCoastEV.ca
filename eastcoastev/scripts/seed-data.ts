@@ -182,6 +182,20 @@ export const PRODUCTS: SeedProduct[] = [
   },
   {
     brandSlug: 'niu',
+    categorySlug: 'e-scooters',
+    slug: 'niu-kqi-300p',
+    name: 'KQi 300P',
+    tagline: 'Suspension comfort, daily range.',
+    description:
+      'A suspension-equipped kick scooter that soaks up rough pavement for a smooth, planted ride, a comfortable everyday commuter with full app connectivity.',
+    priceCents: 969.00 * 100,
+    isFeatured: false,
+    specs: { Range: 'Up to 50 km', 'Top speed': '32 km/h', Suspension: 'Front & rear', 'Tire size': '10.5"' },
+    colors: [C.black, C.white],
+    source: { store: 'niu', handle: 'niu-kqi-300p-suspension-electric-kick-scooter' },
+  },
+  {
+    brandSlug: 'niu',
     categorySlug: 'e-bikes',
     slug: 'niu-bqi-c3-pro',
     name: 'BQi-C3 Pro',
@@ -193,6 +207,20 @@ export const PRODUCTS: SeedProduct[] = [
     specs: { Range: 'Up to 140 km', 'Top speed': '32 km/h', Motor: '750W', Battery: 'Dual battery capable' },
     colors: [C.black],
     source: { store: 'niu', handle: 'niu-bqi-electric-bike' },
+  },
+  {
+    brandSlug: 'niu',
+    categorySlug: 'e-bikes',
+    slug: 'niu-uqi-plus',
+    name: 'UQi+ (eBike version)',
+    tagline: 'Seated ride, e-bike freedom.',
+    description:
+      'The pedal-equipped, e-bike-classed version of NIU’s UQi+: a comfortable seated ride with removable batteries and up to 115 km of range, road-legal without a plate or licence.',
+    priceCents: 995.00 * 100,
+    isFeatured: true,
+    specs: { Range: 'Up to 85–115 km', 'Top speed': '32 km/h', Motor: '1200W hub', Battery: 'Removable 31Ah / 42Ah' },
+    colors: [C.blue, C.grey, C.red, C.white],
+    source: { store: 'niu', handle: 'uqi-plus-electric-scooter' },
   },
 
   // ── E-Ride Pro ──────────────────────────────────────────────
