@@ -30,8 +30,8 @@ export default function ProductPage() {
 
   useEffect(() => {
     document.title = product
-      ? `${product.brand.name} ${product.name} — EastCoastEV`
-      : 'Shop — EastCoastEV';
+      ? `${product.brand.name} ${product.name} | EastCoastEV`
+      : 'Shop | EastCoastEV';
   }, [product]);
 
   if (loading) {

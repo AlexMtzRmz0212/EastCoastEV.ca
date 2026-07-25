@@ -8,7 +8,7 @@ export default function SpecsTable({ specs }: SpecsTableProps) {
 
   return (
     <div className="specs-block reveal">
-      <div className="section-label">Specifications</div>
+      <h2 className="section-label">Specifications</h2>
       <div className="specs-table">
         {entries.map(([key, value]) => (
           <div className="spec-row" key={key}>

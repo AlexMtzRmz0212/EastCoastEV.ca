@@ -11,7 +11,7 @@ export default function LocationsPage() {
   useReveal();
 
   useEffect(() => {
-    document.title = 'Locations — EastCoastEV';
+    document.title = 'Locations | EastCoastEV';
   }, []);
 
   return (
@@ -23,7 +23,7 @@ export default function LocationsPage() {
             Serving the <em className="accent">Maritimes.</em>
           </h1>
           <p className="page-sub reveal">
-            Our flagship storefront is open in Fredericton — the heart of
+            Our flagship storefront is open in Fredericton, the heart of
             everything we do. Anywhere beyond that is just a someday daydream.
           </p>
         </div>
@@ -33,7 +33,7 @@ export default function LocationsPage() {
           <div className="storefront-info">
             <div className="storefront-badge">
               <span className="region-dot active" />
-              Open Now — Flagship
+              Open Now · Flagship
             </div>
             <h2>Fredericton, NB</h2>
             <div className="storefront-lines">
@@ -83,7 +83,7 @@ export default function LocationsPage() {
         <CtaBand
           eyebrow="Just Dreaming"
           title="Wish we were in your city?"
-          text="No promises — but we love hearing where riders wish we'd be someday. Drop us a line."
+          text="No promises, but we love hearing where riders wish we'd be someday. Drop us a line."
           primaryTo="/contact"
           primaryLabel="Say Hello"
         />

@@ -31,7 +31,7 @@ export default function ExpansionSection() {
           <div className="expansion-text reveal-left">
             <div className="section-label">A Someday Dream</div>
             <h2>Maybe one day, <em className="accent">beyond the Bay.</em></h2>
-            <p>Growing past Fredericton is a someday dream — not a plan or a promise. But if enough riders in a city put their hand up, who knows where the road leads. Leave your email and we'll remember you.</p>
+            <p>Growing past Fredericton is a someday dream, not a plan or a promise. But if enough riders in a city put their hand up, who knows where the road leads. Leave your email and we'll remember you.</p>
             <div className="expansion-form">
               <input
                 type="email"
@@ -68,7 +68,7 @@ export default function ExpansionSection() {
               <div className="exp-loc-icon">PEI</div>
               <div className="exp-loc-text">
                 <strong>Charlottetown, PEI</strong>
-                <span>Island rides — a lovely daydream</span>
+                <span>Island rides, a lovely daydream</span>
               </div>
               <div className="exp-loc-badge">Someday</div>
             </div>

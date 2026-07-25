@@ -74,8 +74,7 @@ export default function Hero() {
 
       <div className="container">
         <div className="hero-content">
-          <div className="hero-eyebrow">
-            <div className="dot" />
+          <div className="section-label">
             Fredericton's Premier Electric Vehicles Shop
           </div>
           <h1 className="hero-title">

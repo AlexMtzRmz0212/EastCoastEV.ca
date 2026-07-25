@@ -39,7 +39,7 @@ export default function ProductCard({ product, delay = 0 }: ProductCardProps) {
           <span>{product.brand.name}</span>
           <span className="product-card-cat">{product.category.name}</span>
         </div>
-        <h3 className="product-card-name">{product.name}</h3>
+        <h2 className="product-card-name">{product.name}</h2>
         <div className="product-card-foot">
           <span className="product-price">{formatPrice(product.price_cents)}</span>
           {product.colors.length > 0 && (

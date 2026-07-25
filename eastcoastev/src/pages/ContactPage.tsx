@@ -9,7 +9,7 @@ export default function ContactPage() {
   useReveal();
 
   useEffect(() => {
-    document.title = 'Contact — EastCoastEV';
+    document.title = 'Contact | EastCoastEV';
   }, []);
 
   return (
@@ -21,7 +21,7 @@ export default function ContactPage() {
             Come say <em className="accent">hi.</em>
           </h1>
           <p className="page-sub reveal">
-            Visit the shop, book a service, or send us a note — we're happy to
+            Visit the shop, book a service, or send us a note. We're happy to
             help you find the right ride.
           </p>
         </div>
@@ -36,7 +36,7 @@ export default function ContactPage() {
                 </svg>
               </div>
               <div>
-                <h4>Visit the Shop</h4>
+                <h2>Visit the Shop</h2>
                 <p>148 Main St, Fredericton, NB E3A 2B5</p>
                 <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="contact-link">
                   Get directions →
@@ -51,7 +51,7 @@ export default function ContactPage() {
                 </svg>
               </div>
               <div>
-                <h4>Call or Text</h4>
+                <h2>Call or Text</h2>
                 <p><a href="tel:+15062391855" className="contact-link">+1 (506) 239-1855</a></p>
               </div>
             </div>
@@ -64,7 +64,7 @@ export default function ContactPage() {
                 </svg>
               </div>
               <div>
-                <h4>Email</h4>
+                <h2>Email</h2>
                 <p><a href="mailto:info@eastcoastev.ca" className="contact-link">info@eastcoastev.ca</a></p>
               </div>
             </div>
@@ -77,7 +77,7 @@ export default function ContactPage() {
                 </svg>
               </div>
               <div>
-                <h4>Hours</h4>
+                <h2>Hours</h2>
                 <p>Mon–Sat: 10am – 6pm<br />Sunday: Closed</p>
               </div>
             </div>

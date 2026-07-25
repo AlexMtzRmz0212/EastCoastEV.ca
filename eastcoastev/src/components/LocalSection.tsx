@@ -23,7 +23,7 @@ export default function LocalSection({
                 <div className="region-dot active" />
                 <div className="region-info">
                   <div className="region-name">Fredericton, NB</div>
-                  <div className="region-status">Flagship Location — Open Now</div>
+                  <div className="region-status">Flagship Location · Open Now</div>
                 </div>
               </a>
               <a className="region-item" href="https://www.google.com/maps/search/?api=1&query=Moncton,+NB,+Canada" target="_blank" rel="noopener noreferrer">

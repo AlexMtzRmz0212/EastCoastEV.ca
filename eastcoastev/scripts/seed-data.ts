@@ -66,7 +66,7 @@ export const BRANDS = [
     slug: 'univelo',
     name: 'Univelo',
     description:
-      'Exclusive Canadian distributor of AIMA e-bikes — Bafang-powered, UL-2849 certified commuter, cargo, and fat-tire rides.',
+      'Exclusive Canadian distributor of AIMA e-bikes: Bafang-powered, UL-2849 certified commuter, cargo, and fat-tire rides.',
     website_url: 'https://www.univelo.ca',
     sort_order: 4,
   },
@@ -103,7 +103,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'KQi2 Pro',
     tagline: 'The reliable everyday commuter.',
     description:
-      'A dependable, no-fuss electric kick scooter with a comfortable ride and app connectivity — a great first e-scooter for getting around the city.',
+      'A dependable, no-fuss electric kick scooter with a comfortable ride and app connectivity, a great first e-scooter for getting around the city.',
     priceCents: null,
     isFeatured: false,
     specs: { Range: 'Up to 40 km', 'Top speed': '25 km/h', Motor: '300W', 'Tire size': '10"' },
@@ -145,7 +145,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'KQi3 Max',
     tagline: 'More range, more power.',
     description:
-      'The top of the KQi3 line — extended range and a stronger motor for riders who want to go further and climb steeper hills.',
+      'The top of the KQi3 line, with extended range and a stronger motor for riders who want to go further and climb steeper hills.',
     priceCents: null,
     isFeatured: false,
     specs: { Range: 'Up to 65 km', 'Top speed': '32 km/h', Motor: '900W peak', 'Tire size': '9.5"' },
@@ -159,7 +159,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'KQi Air',
     tagline: 'Ultralight carbon fiber.',
     description:
-      'A carbon-fiber-framed kick scooter weighing just 11.9 kg — remarkably light and portable without giving up smart features.',
+      'A carbon-fiber-framed kick scooter weighing just 11.9 kg, remarkably light and portable without giving up smart features.',
     priceCents: null,
     isFeatured: true,
     specs: { Range: 'Up to 50 km', 'Top speed': '32 km/h', Weight: '11.9 kg', Frame: 'Carbon fiber' },
@@ -187,7 +187,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'BQi-C3 Pro',
     tagline: 'Smart electric bike.',
     description:
-      'NIU’s connected electric bike — a comfortable, app-enabled ride with strong range for commuting and weekend exploring.',
+      'NIU’s connected electric bike: a comfortable, app-enabled ride with strong range for commuting and weekend exploring.',
     priceCents: null,
     isFeatured: false,
     specs: { Range: 'Up to 140 km', 'Top speed': '32 km/h', Motor: '750W', Battery: 'Dual battery capable' },
@@ -203,7 +203,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'Mini R',
     tagline: 'Compact e-moto, full attitude.',
     description:
-      'A smaller-framed electric dirt bike that keeps the E-Ride Pro punch in a more manageable package — great for tighter trails and newer riders.',
+      'A smaller-framed electric dirt bike that keeps the E-Ride Pro punch in a more manageable package, great for tighter trails and newer riders.',
     priceCents: null,
     isFeatured: false,
     specs: { Battery: '72V 30Ah', Motor: '72V mid-drive', 'Wheel size': '14" / 12"', 'Brakes': 'Hydraulic disc' },
@@ -231,7 +231,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'SS 2.0',
     tagline: 'Long-range electric dirt bike.',
     description:
-      'A long-range 72V electric dirt bike with a swappable battery and serious acceleration — a favorite for adult off-road riders.',
+      'A long-range 72V electric dirt bike with a swappable battery and serious acceleration, a favorite for adult off-road riders.',
     priceCents: null,
     isFeatured: true,
     specs: { Battery: '72V 40Ah (2880Wh)', Motor: '5kW rated / 12kW peak', 'Top speed': '~96 km/h', '0–48 km/h': '2.36 s' },
@@ -245,7 +245,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'SS 3.0',
     tagline: 'The next-gen SS.',
     description:
-      'The evolution of the SS platform with upgraded components and seat options — more refinement for demanding trail days.',
+      'The evolution of the SS platform with upgraded components and seat options, with more refinement for demanding trail days.',
     priceCents: null,
     isFeatured: false,
     specs: { Battery: '72V 50Ah', Motor: 'High-output mid-drive', Seat: 'Long / short options', Brakes: 'Racing hydraulic disc' },
@@ -259,7 +259,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'SR',
     tagline: 'Top of the range.',
     description:
-      'E-Ride Pro’s flagship — the most powerful build in the lineup, with the biggest battery and highest top speed for experienced riders.',
+      'E-Ride Pro’s flagship: the most powerful build in the lineup, with the biggest battery and highest top speed for experienced riders.',
     priceCents: null,
     isFeatured: true,
     specs: { Battery: '72V 50Ah', Motor: '10kW rated / 25kW peak', 'Top speed': '~112 km/h', '0–48 km/h': '1.8 s' },
@@ -275,7 +275,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'IN 10',
     tagline: 'Your entry into electric off-road.',
     description:
-      'A compact, lightweight off-road electric dirt bike for teens and adults — an affordable, approachable way to get onto the trails.',
+      'A compact, lightweight off-road electric dirt bike for teens and adults, an affordable and approachable way to get onto the trails.',
     priceCents: null,
     isFeatured: true,
     specs: { Battery: '48V 23Ah', Motor: '2600W mid-drive', 'Top speed': '~64 km/h', 'Wheel size': '14" / 12"' },
@@ -289,8 +289,8 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'IN 10 Pro',
     tagline: 'More power, more range.',
     description:
-      'The high-performance upgrade to the IN 10 — a bigger battery, stronger motor, and larger wheels for faster, longer rides.',
-    priceCents: null,
+      'The high-performance upgrade to the IN 10: a bigger battery, stronger motor, and larger wheels for faster, longer rides.',
+    priceCents: 3099.00 * 100,
     isFeatured: false,
     specs: { Battery: '60V 27Ah', Motor: '5500W peak mid-drive', 'Top speed': '~80 km/h', Range: 'Up to 96 km' },
     colors: [C.red, C.black],
@@ -305,7 +305,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'AIMA Key West',
     tagline: 'City commuter, step-through ease.',
     description:
-      'A Bafang-powered urban e-bike with a comfortable step-through frame — smooth pedal assist for effortless city commuting.',
+      'A Bafang-powered urban e-bike with a comfortable step-through frame and smooth pedal assist for effortless city commuting.',
     priceCents: null,
     isFeatured: false,
     specs: { Motor: 'Bafang mid-drive', Battery: 'Bafang 12.8Ah', 'Tire size': '27.5" x 2.1"', Certification: 'UL-2849' },
@@ -333,7 +333,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'AIMA Big Sur G2 26"',
     tagline: 'Fat-tire comfort cruiser.',
     description:
-      'A 26" fat-tire e-bike with a Bafang motor and big battery — stable, planted, and ready for gravel, sand, or the daily commute.',
+      'A 26" fat-tire e-bike with a Bafang motor and big battery: stable, planted, and ready for gravel, sand, or the daily commute.',
     priceCents: null,
     isFeatured: true,
     specs: { Motor: 'Bafang mid-drive', Battery: 'Bafang 15Ah', 'Tire size': '26" x 4.0"', Certification: 'UL-2849' },
@@ -347,7 +347,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'AIMA Big Sur Sport G2 20"',
     tagline: 'Compact fat-tire fun.',
     description:
-      'A punchy 20" fat-tire e-bike — the compact, playful sibling of the Big Sur, easy to handle and full of character.',
+      'A punchy 20" fat-tire e-bike: the compact, playful sibling of the Big Sur, easy to handle and full of character.',
     priceCents: null,
     isFeatured: false,
     specs: { Motor: 'Bafang mid-drive', Battery: 'Bafang 15Ah', 'Tire size': '20" x 4.0"', Certification: 'UL-2849' },
@@ -361,7 +361,7 @@ export const PRODUCTS: SeedProduct[] = [
     name: 'AIMA Big Sur Cargo 20"',
     tagline: 'Haul more, ride electric.',
     description:
-      'A cargo-ready fat-tire e-bike built to carry gear, groceries, or a passenger — a practical electric workhorse for family life.',
+      'A cargo-ready fat-tire e-bike built to carry gear, groceries, or a passenger, a practical electric workhorse for family life.',
     priceCents: null,
     isFeatured: false,
     specs: { Motor: 'Bafang mid-drive', Battery: 'Bafang 15Ah', 'Tire size': '20" x 3.5"', 'Cargo ready': 'Yes' },

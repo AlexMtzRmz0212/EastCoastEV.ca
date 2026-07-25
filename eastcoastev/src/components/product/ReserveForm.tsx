@@ -86,11 +86,11 @@ export default function ReserveForm({
           </svg>
           Reservation received
         </div>
-        <h3>You're on the list!</h3>
+        <h2>You're on the list!</h2>
         <p>
-          Thanks {name.split(' ')[0] || 'for reserving'} — we'll reach out within
+          Thanks {name.split(' ')[0] || 'for reserving'}, we'll reach out within
           one business day to confirm your {product.name}
-          {isDemo || import.meta.env.DEV ? ' (preview mode — no email was sent)' : ''}.
+          {isDemo || import.meta.env.DEV ? ' (preview mode, no email was sent)' : ''}.
         </p>
       </div>
     );
@@ -105,9 +105,9 @@ export default function ReserveForm({
         </svg>
         No payment required
       </div>
-      <h3>Reserve this model</h3>
+      <h2>Reserve this model</h2>
       <p>
-        Put your name on it — we'll hold one at the shop and contact you to
+        Put your name on it, and we'll hold one at the shop and contact you to
         arrange a test ride or pickup.
       </p>
 
@@ -159,7 +159,7 @@ export default function ReserveForm({
 
       {status === 'error' && (
         <p className="reserve-error">
-          Something went wrong — please try again, or call us at +1 (506) 239-1855.
+          Something went wrong. Please try again, or call us at +1 (506) 239-1855.
         </p>
       )}
 

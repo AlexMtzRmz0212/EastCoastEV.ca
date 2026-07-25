@@ -13,7 +13,7 @@ export default function HomePage() {
 
   useEffect(() => {
     document.title =
-      'EastCoastEV | E-Bikes, Scooters & Mobility — New Brunswick & Maritimes';
+      'EastCoastEV | E-Bikes, Scooters & Mobility in New Brunswick & the Maritimes';
   }, []);
 
   return (

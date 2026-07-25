@@ -38,7 +38,7 @@ export default function AboutPage() {
   useReveal();
 
   useEffect(() => {
-    document.title = 'Our Story — EastCoastEV';
+    document.title = 'Our Story | EastCoastEV';
   }, []);
 
   return (
@@ -57,7 +57,7 @@ export default function AboutPage() {
             place. Its scenic river routes, its packed commuter corridors, and
             communities that deserve better, cleaner ways to get around. We saw
             riders driving hours to Toronto or Montreal just to get a bike
-            serviced — and knew the Maritimes needed a real electric-vehicle home
+            serviced, and knew the Maritimes needed a real electric-vehicle home
             of its own.
           </p>
           <p>
@@ -67,14 +67,14 @@ export default function AboutPage() {
             because you are one.
           </p>
           <p>
-            We're just getting started — but the mission is the same as day one:
+            We're just getting started, but the mission is the same as day one:
             get more people onto electric, and keep them rolling.
           </p>
         </div>
 
-        <div className="section-label reveal" style={{ margin: '64px 0 24px' }}>
+        <h2 className="section-label reveal" style={{ margin: '64px 0 24px' }}>
           What We Stand For
-        </div>
+        </h2>
         <div className="feature-grid">
           {VALUES.map((v, i) => (
             <div
@@ -99,7 +99,7 @@ export default function AboutPage() {
       <div className="container">
         <CtaBand
           eyebrow="Come Say Hi"
-          title="Got your back — and your future bike."
+          title="Got your back, and your future bike."
           text="Drop by the storefront in Fredericton, or reach out and we'll help you find your ride."
           primaryTo="/shop"
           primaryLabel="Browse the Lineup"

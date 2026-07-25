@@ -221,7 +221,7 @@ async function seedProduct(
       product_id: productId,
       color_id: colorIds[c.name],
       storage_path: path,
-      alt: `${product.name} — ${c.name}`,
+      alt: `${product.name}, ${c.name}`,
       sort_order: order++,
     });
   }
@@ -269,7 +269,7 @@ async function main() {
     }
   }
 
-  console.log(`\nDone — ${ok}/${PRODUCTS.length} products seeded.`);
+  console.log(`\nDone: ${ok}/${PRODUCTS.length} products seeded.`);
   if (ok < PRODUCTS.length) process.exit(1);
 }
 

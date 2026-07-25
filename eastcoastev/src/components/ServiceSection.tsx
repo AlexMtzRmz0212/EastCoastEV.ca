@@ -55,7 +55,7 @@ export default function ServiceSection({
                   </svg>
                 </div>
                 <div className="service-feature-text">
-                  <h4>All-Brand Certified</h4>
+                  <h3>All-Brand Certified</h3>
                   <p>Rad Power, Trek, Specialized, Juiced, and more. We fix it all.</p>
                 </div>
               </div>
@@ -67,7 +67,7 @@ export default function ServiceSection({
                   </svg>
                 </div>
                 <div className="service-feature-text">
-                  <h4>Battery Diagnostics</h4>
+                  <h3>Battery Diagnostics</h3>
                   <p>Full battery health checks, cell replacement, and charging system repairs.</p>
                 </div>
               </div>
@@ -79,7 +79,7 @@ export default function ServiceSection({
                   </svg>
                 </div>
                 <div className="service-feature-text">
-                  <h4>Winter Storage &amp; Seasonal Tune-Ups</h4>
+                  <h3>Winter Storage &amp; Seasonal Tune-Ups</h3>
                   <p>Pre-season prep and end-of-season storage with peace of mind.</p>
                 </div>
               </div>
@@ -90,7 +90,7 @@ export default function ServiceSection({
                   </svg>
                 </div>
                 <div className="service-feature-text">
-                  <h4>Mobile Repair Unit</h4>
+                  <h3>Mobile Repair Unit</h3>
                   <p>Can't make it to us? We'll come to you. Ask about our mobile service zones.</p>
                 </div>
               </div>

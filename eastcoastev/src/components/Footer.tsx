@@ -56,7 +56,7 @@ export default function Footer() {
 
           {/* Shop column */}
           <div className="footer-col">
-            <h4>Shop</h4>
+            <h2>Shop</h2>
             <div className="footer-links">
               <Link to="/shop?category=e-bikes" className="footer-link">E-Bikes</Link>
               <Link to="/shop?category=e-scooters" className="footer-link">E-Scooters</Link>
@@ -68,7 +68,7 @@ export default function Footer() {
 
           {/* Company column */}
           <div className="footer-col">
-            <h4>Company</h4>
+            <h2>Company</h2>
             <div className="footer-links">
               <Link to="/service" className="footer-link">Service &amp; Repair</Link>
               <Link to="/locations" className="footer-link">Locations</Link>
@@ -80,7 +80,7 @@ export default function Footer() {
 
           {/* Contact column */}
           <div className="footer-col">
-            <h4>Contact</h4>
+            <h2>Contact</h2>
             <div className="footer-contact">
               <div className="footer-contact-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -118,6 +118,12 @@ export default function Footer() {
           <div className="footer-copy">
             © 2026 EastCoastEV Ltd. All rights reserved.{' '}
             <span style={{ color: 'var(--text-dim)' }}>· Fredericton, NB</span>
+          </div>
+
+          <div className="footer-legal">
+            <Link to="/privacy">Privacy Policy</Link>
+            <span className="footer-legal-sep">·</span>
+            <Link to="/terms">Terms of Service</Link>
           </div>
 
           <div className="dev-credit">

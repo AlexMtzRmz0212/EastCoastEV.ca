@@ -23,7 +23,7 @@ const SERVICES = [
   },
   {
     title: 'Tire & Brake Service',
-    text: 'Flats, worn pads, hydraulic bleeds, and rotor truing — done same-day where possible.',
+    text: 'Flats, worn pads, hydraulic bleeds, and rotor truing, done same-day where possible.',
     icon: (
       <>
         <circle cx="12" cy="12" r="9" />
@@ -64,7 +64,7 @@ export default function ServicePage() {
   useReveal();
 
   useEffect(() => {
-    document.title = 'Service & Repair — EastCoastEV';
+    document.title = 'Service & Repair | EastCoastEV';
   }, []);
 
   return (
@@ -76,7 +76,7 @@ export default function ServicePage() {
             Keep the current <em className="accent">flowing.</em>
           </h1>
           <p className="page-sub reveal">
-            Certified technicians servicing every major brand — whether you bought
+            Certified technicians servicing every major brand, whether you bought
             it from us or not. Fast turnaround, fair pricing, no BS.
           </p>
         </div>
@@ -85,9 +85,9 @@ export default function ServicePage() {
       <ServiceSection />
 
       <div className="container">
-        <div className="section-label reveal" style={{ marginBottom: '24px' }}>
+        <h2 className="section-label reveal" style={{ marginBottom: '24px' }}>
           What We Handle
-        </div>
+        </h2>
         <div className="feature-grid">
           {SERVICES.map((s, i) => (
             <div
@@ -109,7 +109,7 @@ export default function ServicePage() {
         <CtaBand
           eyebrow="Ready When You Are"
           title="Book a service or diagnostic."
-          text="Tell us what's going on and we'll get you booked in — most repairs turn around in 24–48 hours."
+          text="Tell us what's going on and we'll get you booked in. Most repairs turn around in 24–48 hours."
           primaryTo="/contact"
           primaryLabel="Book a Service"
           secondaryTo="/shop"

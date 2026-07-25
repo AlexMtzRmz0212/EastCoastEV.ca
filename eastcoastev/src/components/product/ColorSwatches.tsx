@@ -18,7 +18,7 @@ export default function ColorSwatches({
   return (
     <div className="swatch-row">
       <span className="swatch-label">
-        Color{selected ? <em> — {selected.name}</em> : ''}
+        Color{selected ? <em>: {selected.name}</em> : ''}
       </span>
       <div className="swatches">
         {colors.map(color => (

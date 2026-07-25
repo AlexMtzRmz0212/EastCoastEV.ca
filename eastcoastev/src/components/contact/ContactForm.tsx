@@ -57,10 +57,10 @@ export default function ContactForm() {
           </svg>
           Message sent
         </div>
-        <h3>Thanks, {name.split(' ')[0] || 'friend'}!</h3>
+        <h2>Thanks, {name.split(' ')[0] || 'friend'}!</h2>
         <p>
           We got your message and will get back to you within one business day
-          {isDemo || import.meta.env.DEV ? ' (preview mode — no email was sent)' : ''}.
+          {isDemo || import.meta.env.DEV ? ' (preview mode, no email was sent)' : ''}.
         </p>
       </div>
     );
@@ -68,8 +68,8 @@ export default function ContactForm() {
 
   return (
     <form className="reserve-card" onSubmit={handleSubmit}>
-      <h3>Send us a message</h3>
-      <p>Questions, service bookings, test rides — we read every one.</p>
+      <h2>Send us a message</h2>
+      <p>Questions, service bookings, test rides: we read every one.</p>
 
       <div className="reserve-fields">
         <input
@@ -107,7 +107,7 @@ export default function ContactForm() {
 
       {status === 'error' && (
         <p className="reserve-error">
-          Something went wrong — please try again, or call us at +1 (506) 239-1855.
+          Something went wrong. Please try again, or call us at +1 (506) 239-1855.
         </p>
       )}
 

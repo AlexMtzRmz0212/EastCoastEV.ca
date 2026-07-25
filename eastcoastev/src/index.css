@@ -9,7 +9,7 @@
   --surface2: #102540;
   --text: #e8eef5;
   --text-muted: #7d9ab5;
-  --text-dim: #3d5a73;
+  --text-dim: #6690b0;
   --accent: #b5f53c;
   --accent-glow: rgba(181,245,60,0.25);
   --accent-dim: rgba(181,245,60,0.08);
@@ -35,7 +35,7 @@
   --surface2: #eaf1f8;
   --text: #0d1f30;
   --text-muted: #456278;
-  --text-dim: #8aafc4;
+  --text-dim: #566d7c;
   --accent: #4d7c0f;
   --accent-glow: rgba(77,124,15,0.25);
   --accent-dim: rgba(77,124,15,0.07);
@@ -279,18 +279,7 @@ nav{display:flex;align-items:center;gap:4px;margin-left:auto}
   padding-top:120px;padding-bottom:80px;
   max-width:780px;
 }
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;
-  color:var(--text-muted);margin-bottom:2rem;
-  border:1px solid var(--border);border-radius:100px;
-  padding:6px 16px 6px 6px;
-}
-.hero-eyebrow .dot{
-  width:22px;height:22px;border-radius:50%;background:var(--accent);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.hero-eyebrow .dot::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--on-accent)}
+.hero-content .section-label{margin-bottom:1.5rem}
 .hero-title{
   font-family:var(--font-head);
   font-size:clamp(2.8rem,7vw,5.5rem);
@@ -554,7 +543,7 @@ a.region-item{text-decoration:none;color:inherit;cursor:pointer;display:flex}
   color:var(--accent);
 }
 .service-feature-icon svg{width:18px;height:18px}
-.service-feature-text h4{font-size:0.85rem;font-weight:600;margin-bottom:4px}
+.service-feature-text h3{font-size:0.85rem;font-weight:600;margin-bottom:4px}
 .service-feature-text p{font-size:0.8rem;color:var(--text-muted)}
 
 /* ============================================================
@@ -725,7 +714,7 @@ footer{
   transition:var(--transition);
 }
 .footer-newsletter button:hover{box-shadow:0 0 20px var(--accent-glow)}
-.footer-col h4{
+.footer-col h2{
   font-family:var(--font-head);font-size:0.72rem;
   letter-spacing:0.15em;text-transform:uppercase;
   margin-bottom:20px;color:var(--text);
@@ -747,6 +736,13 @@ footer{
   border-top:1px solid var(--border);padding-top:32px;
 }
 .footer-copy{font-size:0.75rem;color:var(--text-dim)}
+.footer-legal{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.footer-legal a{
+  font-size:0.75rem;color:var(--text-muted);letter-spacing:0.02em;
+  transition:var(--transition);
+}
+.footer-legal a:hover{color:var(--accent)}
+.footer-legal .footer-legal-sep{color:var(--text-dim);opacity:0.7}
 .social-links{display:flex;gap:12px}
 .social-link{
   width:36px;height:36px;border-radius:var(--radius);
@@ -1001,7 +997,7 @@ footer{
   background:radial-gradient(circle,var(--accent-dim) 0%,transparent 70%);
   pointer-events:none;
 }
-.reserve-card h3{
+.reserve-card h2{
   font-family:var(--font-head);font-size:1.2rem;font-weight:700;
   margin-bottom:8px;line-height:1.2;
 }
@@ -1091,6 +1087,30 @@ footer{
   color:var(--accent);float:left;line-height:0.9;margin:4px 12px 0 0;
 }
 
+/* Legal pages (Privacy / Terms) */
+.legal{max-width:70ch}
+.legal-intro{
+  color:var(--text-muted);font-size:1.02rem;line-height:1.75;
+  font-weight:300;margin-bottom:2rem;
+}
+.legal h2{
+  font-family:var(--font-head);font-size:1.15rem;font-weight:700;
+  line-height:1.25;color:var(--text);
+  margin:2.4rem 0 0.9rem;
+}
+.legal p{
+  color:var(--text-muted);font-size:0.95rem;line-height:1.75;
+  margin-bottom:1rem;
+}
+.legal ul{margin:0 0 1rem 1.1rem;padding:0}
+.legal li{
+  color:var(--text-muted);font-size:0.95rem;line-height:1.7;
+  margin-bottom:0.5rem;
+}
+.legal a{color:var(--accent);transition:var(--transition)}
+.legal a:hover{opacity:0.75}
+.legal strong{color:var(--text);font-weight:600}
+
 /* CTA band */
 .cta-band{margin:40px 0 0;padding:64px 0 0}
 .cta-band-inner{
@@ -1158,7 +1178,7 @@ footer{
   display:flex;align-items:center;justify-content:center;color:var(--accent);
 }
 .contact-icon svg{width:20px;height:20px}
-.contact-item h4{
+.contact-item h2{
   font-family:var(--font-head);font-size:0.8rem;letter-spacing:0.08em;
   text-transform:uppercase;margin-bottom:6px;
 }
