@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import Ribbon from '../components/Ribbon';
 import ShopSection from '../components/ShopSection';
 import ServiceSection from '../components/ServiceSection';
+import FinancingSection from '../components/FinancingSection';
 import LocalSection from '../components/LocalSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import CtaBand from '../components/CtaBand';
@@ -23,6 +24,7 @@ export default function HomePage() {
       {/* Each section teases a full page via its CTA */}
       <ShopSection />
       <ServiceSection ctaTo="/service" ctaLabel="Explore Service & Repair" />
+      <FinancingSection />
       <LocalSection ctaTo="/about" ctaLabel="Read Our Story" />
       <TestimonialsSection />
       <CtaBand

@@ -1212,3 +1212,23 @@ footer{
 .dev-credit a:hover{color:var(--accent)}
 .dev-credit a:hover::after{transform:scaleX(1)}
 @media(max-width:580px){.dev-credit{justify-content:flex-start}}
+
+/* ============================================================
+   CANEX FINANCING (homepage section)
+   ============================================================ */
+.financing-section{padding:120px 0;background:var(--bg)}
+.financing-banner{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  padding:40px;min-height:360px;
+  background:var(--surface2);
+  background-image:
+    linear-gradient(rgba(181,245,60,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(181,245,60,0.03) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.financing-banner img{
+  display:block;width:100%;height:auto;max-width:460px;
+  border-radius:var(--radius);
+  box-shadow:0 16px 48px rgba(0,0,0,0.45);
+}
+@media(max-width:580px){.financing-banner{padding:24px;min-height:240px}}
