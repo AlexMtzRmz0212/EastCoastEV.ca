@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import AnnouncementBar from './components/AnnouncementBar';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollManager from './components/ScrollManager';
@@ -23,6 +24,7 @@ function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollManager />
+      <AnnouncementBar />
       <Header isDark={isDark} onThemeToggle={() => setIsDark(d => !d)} />
       <Routes>
         <Route path="/" element={<HomePage />} />

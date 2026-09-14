@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import FilterBar from '../components/shop/FilterBar';
 import ProductCard from '../components/shop/ProductCard';
-import { getBrands, getCategories, getProducts } from '../lib/catalog';
+import { getBrandsInStock, getCategories, getProducts } from '../lib/catalog';
 import { useCatalog } from '../hooks/useCatalog';
 import { useReveal } from '../hooks/useReveal';
+import { PRIMARY, cityName } from '../lib/locations';
 
 export default function ShopPage() {
   const { data: products, loading, error } = useCatalog(getProducts);
-  const { data: brands } = useCatalog(getBrands);
+  const { data: brands } = useCatalog(getBrandsInStock);
   const { data: categories } = useCatalog(getCategories);
   const [searchParams] = useSearchParams();
 
@@ -36,8 +37,8 @@ export default function ShopPage() {
             Find your <em className="accent">ride.</em>
           </h1>
           <p className="page-sub reveal">
-            Every model below is available at our Fredericton storefront.
-            Reserve online and come try it in person.
+            Every model below is available at our Fredericton and Ottawa
+            shops. Reserve online and come try it in person.
           </p>
         </div>
 
@@ -82,8 +83,9 @@ export default function ShopPage() {
             <p>
               {(products ?? []).length === 0 ? (
                 <>
-                  New rides are on their way. Drop by the shop at 148 Main St,
-                  Fredericton, or <Link to="/#contact">get in touch</Link>.
+                  New rides are on their way. Drop by the shop in{' '}
+                  {cityName(PRIMARY)} or{' '}
+                  <Link to="/#contact">get in touch</Link>.
                 </>
               ) : (
                 'Try a different brand or type combination.'

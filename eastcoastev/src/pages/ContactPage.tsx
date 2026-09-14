@@ -1,9 +1,13 @@
 import { useEffect } from 'react';
 import ContactForm from '../components/contact/ContactForm';
 import { useReveal } from '../hooks/useReveal';
-
-const MAPS_URL =
-  'https://www.google.com/maps/place/East+Coast+EV/@45.9786595,-66.6542817,17z/data=!4m6!3m5!1s0x4ca41977adc4c7e7:0xc15110ae25b4c1af!8m2!3d45.9782928!4d-66.654598!16s%2Fg%2F11z68z8rqd';
+import {
+  LOCATIONS,
+  PRIMARY,
+  EMAIL,
+  EMAIL_HREF,
+  fullAddress,
+} from '../lib/locations';
 
 export default function ContactPage() {
   useReveal();
@@ -36,11 +40,21 @@ export default function ContactPage() {
                 </svg>
               </div>
               <div>
-                <h2>Visit the Shop</h2>
-                <p>148 Main St, Fredericton, NB E3A 2B5</p>
-                <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="contact-link">
-                  Get directions →
-                </a>
+                <h2>Visit a Shop</h2>
+                {LOCATIONS.map(loc => (
+                  <p key={loc.slug} className="contact-address">
+                    <span className="contact-address-city">{loc.city}</span>
+                    {fullAddress(loc)}
+                    <a
+                      href={loc.mapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-link"
+                    >
+                      Get directions →
+                    </a>
+                  </p>
+                ))}
               </div>
             </div>
 
@@ -52,7 +66,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <h2>Call or Text</h2>
-                <p><a href="tel:+15062391855" className="contact-link">+1 (506) 239-1855</a></p>
+                <p><a href={PRIMARY.phoneHref} className="contact-link">{PRIMARY.phone}</a></p>
               </div>
             </div>
 
@@ -65,7 +79,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <h2>Email</h2>
-                <p><a href="mailto:info@eastcoastev.ca" className="contact-link">info@eastcoastev.ca</a></p>
+                <p><a href={EMAIL_HREF} className="contact-link">{EMAIL}</a></p>
               </div>
             </div>
 
@@ -78,7 +92,8 @@ export default function ContactPage() {
               </div>
               <div>
                 <h2>Hours</h2>
-                <p>Mon–Sat: 10am – 6pm<br />Sunday: Closed</p>
+                <p>{PRIMARY.hours}<br />{PRIMARY.hoursSunday}</p>
+                <p className="contact-hours-note">Same hours at both shops, local time.</p>
               </div>
             </div>
           </div>

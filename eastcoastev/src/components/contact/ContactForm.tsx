@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
+import { PRIMARY } from '../../lib/locations';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -107,7 +108,7 @@ export default function ContactForm() {
 
       {status === 'error' && (
         <p className="reserve-error">
-          Something went wrong. Please try again, or call us at +1 (506) 239-1855.
+          Something went wrong. Please try again, or call us at {PRIMARY.phone}.
         </p>
       )}
 

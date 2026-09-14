@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import type { ProductWithRelations } from '../../lib/types';
+import { PRIMARY } from '../../lib/locations';
 
 interface ReserveFormProps {
   product: ProductWithRelations;
@@ -159,7 +160,7 @@ export default function ReserveForm({
 
       {status === 'error' && (
         <p className="reserve-error">
-          Something went wrong. Please try again, or call us at +1 (506) 239-1855.
+          Something went wrong. Please try again, or call us at {PRIMARY.phone}.
         </p>
       )}
 

@@ -8,6 +8,7 @@ import LocalSection from '../components/LocalSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import CtaBand from '../components/CtaBand';
 import { useReveal } from '../hooks/useReveal';
+import { LOCATIONS, shortAddress } from '../lib/locations';
 
 export default function HomePage() {
   useReveal();
@@ -29,8 +30,8 @@ export default function HomePage() {
       <TestimonialsSection />
       <CtaBand
         eyebrow="Come Ride With Us"
-        title="Your next ride is waiting in Fredericton."
-        text="Browse the lineup online, then visit our storefront at 148 Main St to test ride before you buy."
+        title="Your next ride is waiting."
+        text={`Browse the lineup online, then come test ride before you buy at ${shortAddress(LOCATIONS[0])} or ${shortAddress(LOCATIONS[1])}.`}
         primaryTo="/shop"
         primaryLabel="Shop the Lineup"
         secondaryTo="/contact"

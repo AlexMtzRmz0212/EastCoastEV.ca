@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
-import { getBrands } from '../lib/catalog';
+import { getBrandsInStock } from '../lib/catalog';
 import { useCatalog } from '../hooks/useCatalog';
 
-const FALLBACK_BRANDS = ['NIU', 'E-Ride Pro', 'Yozma', 'Univelo', 'Strike', 'HeyBike'];
+// Shown only if the catalog can't be reached. Keep in sync with BRANDS in
+// scripts/seed-data.ts.
+const FALLBACK_BRANDS = ['NIU', 'E-Ride Pro', 'Yozma', 'Univelo', 'Throne', 'Sur-Ron'];
 
 export default function TestimonialsSection() {
-  const { data: brands } = useCatalog(getBrands);
+  const { data: brands } = useCatalog(getBrandsInStock);
 
   return (
     <section className="testimonials-section">

@@ -2,10 +2,15 @@
  * Seeds the EastCoastEV catalog into Supabase.
  *
  * For each product in seed-data.ts it:
- *   1. fetches the manufacturer's live Shopify product JSON,
- *   2. downloads the official photos and uploads them to the
- *      `product-images` Storage bucket (re-hosted, not hotlinked),
+ *   1. collects the product's photos, either by fetching the manufacturer's
+ *      live Shopify product JSON (`source`) or from manually supplied files
+ *      and URLs (`images`) for brands whose store has no usable feed,
+ *   2. uploads them to the `product-images` Storage bucket (re-hosted, not
+ *      hotlinked),
  *   3. upserts brand / category / product / color / image rows.
+ *
+ * A product with neither `source` nor `images` seeds its row with no photos
+ * and logs a warning, so a new brand can go live before its pictures arrive.
  *
  * Run from the eastcoastev/ directory (schema.sql must already be applied):
  *   npx tsx --env-file=.env.local scripts/seed.ts
@@ -13,6 +18,9 @@
  * Requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in the environment.
  * Idempotent: re-running replaces a product's colors/images and updates its row.
  */
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createClient } from '@supabase/supabase-js';
 import {
   BRANDS,
@@ -25,6 +33,11 @@ import {
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const BUCKET = 'product-images';
+// Where manually supplied photos live, for brands with no usable Shopify feed.
+const LOCAL_IMAGE_DIR = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  'product-images',
+);
 
 if (!SUPABASE_URL || !SERVICE_KEY) {
   console.error(
@@ -46,6 +59,7 @@ function slugify(s: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
+// Works for both URLs (may carry a query string) and plain file paths.
 function extFromUrl(url: string): string {
   const clean = url.split('?')[0];
   const m = clean.match(/\.(webp|jpg|jpeg|png|avif)$/i);
@@ -79,14 +93,17 @@ async function fetchProduct(store: keyof typeof STORE_BASE, handle: string) {
   return product;
 }
 
-async function downloadAndUpload(
-  imageUrl: string,
-  storagePath: string,
-): Promise<void> {
+async function fetchBytes(imageUrl: string): Promise<Uint8Array> {
   const res = await fetch(imageUrl);
   if (!res.ok) throw new Error(`download ${imageUrl} → HTTP ${res.status}`);
-  const bytes = new Uint8Array(await res.arrayBuffer());
-  const ext = extFromUrl(imageUrl);
+  return new Uint8Array(await res.arrayBuffer());
+}
+
+async function uploadBytes(
+  bytes: Uint8Array,
+  storagePath: string,
+  ext: string,
+): Promise<void> {
   const { error } = await db.storage
     .from(BUCKET)
     .upload(storagePath, bytes, {
@@ -144,14 +161,121 @@ async function seedBrandsAndCategories() {
   return { brandIds, categoryIds };
 }
 
+/**
+ * A photo we intend to store, with its bytes not yet loaded. Both the Shopify
+ * path and the manual path produce these, so everything downstream — storage
+ * paths, ordering, the cap on gallery shots — stays in one place.
+ */
+interface PendingImage {
+  colorName: string | null;
+  alt: string | null;
+  ext: string;
+  /** Distinguishes photos so the same source isn't stored twice. */
+  key: string;
+  load: () => Promise<Uint8Array>;
+}
+
+/** Photos from the manufacturer's live Shopify product JSON. */
+async function pendingFromShopify(product: SeedProduct): Promise<PendingImage[]> {
+  const source = product.source!;
+  const live = await fetchProduct(source.store, source.handle);
+  const colorValues = product.colors.map(c => c.name);
+
+  // Which image belongs to which color, taken from the variants' featured images.
+  const colorImage: Record<string, string> = {};
+  for (const v of live.variants) {
+    if (!v.featured_image) continue;
+    const colorName = variantColorName(v.title, colorValues);
+    if (colorName && !colorImage[colorName]) {
+      colorImage[colorName] = v.featured_image.src;
+    }
+  }
+
+  const pending: PendingImage[] = [];
+  for (const c of product.colors) {
+    const src = colorImage[c.name];
+    if (!src) continue;
+    pending.push({
+      colorName: c.name,
+      alt: `${product.name}, ${c.name}`,
+      ext: extFromUrl(src),
+      key: src,
+      load: () => fetchBytes(src),
+    });
+  }
+  // Everything else becomes a generic gallery shot.
+  for (const img of live.images) {
+    pending.push({
+      colorName: null,
+      alt: product.name,
+      ext: extFromUrl(img.src),
+      key: img.src,
+      load: () => fetchBytes(img.src),
+    });
+  }
+  return pending;
+}
+
+/** Photos supplied by hand, for brands whose store has no usable feed. */
+function pendingFromManual(product: SeedProduct): PendingImage[] {
+  const colorNames = new Set(product.colors.map(c => c.name));
+
+  return product.images!.map((img, i) => {
+    if (!!img.file === !!img.url) {
+      throw new Error(
+        `images[${i}]: set exactly one of "file" or "url" (got ${
+          img.file && img.url ? 'both' : 'neither'
+        })`,
+      );
+    }
+    // A typo here would silently detach the photo from its swatch, so fail loudly.
+    if (img.color && !colorNames.has(img.color)) {
+      throw new Error(
+        `images[${i}]: color "${img.color}" is not one of this product's colors ` +
+          `(${[...colorNames].join(', ') || 'none'})`,
+      );
+    }
+
+    const ref = img.file ?? img.url!;
+    const alt = img.alt ?? (img.color ? `${product.name}, ${img.color}` : product.name);
+    return {
+      colorName: img.color ?? null,
+      alt,
+      ext: extFromUrl(ref),
+      key: ref,
+      load: img.file
+        ? () => readFile(path.join(LOCAL_IMAGE_DIR, img.file!))
+            .then(b => new Uint8Array(b))
+            .catch(err => {
+              throw new Error(
+                `read scripts/product-images/${img.file} → ${
+                  err instanceof Error ? err.message : err
+                }`,
+              );
+            })
+        : () => fetchBytes(img.url!),
+    };
+  });
+}
+
+async function collectImages(product: SeedProduct): Promise<PendingImage[]> {
+  if (product.source) return pendingFromShopify(product);
+  if (product.images?.length) return pendingFromManual(product);
+  return [];
+}
+
 async function seedProduct(
   product: SeedProduct,
   brandId: string,
   categoryId: string,
   index: number,
 ) {
-  const live = await fetchProduct(product.source.store, product.source.handle);
-  const colorValues = product.colors.map(c => c.name);
+  // 0. Work out where the photos come from BEFORE touching the database. This
+  //    step does the network fetch for Shopify-sourced products and validates
+  //    manual entries, and both can fail; doing it first means a product whose
+  //    manufacturer handle has gone 404 keeps the rows it already had instead
+  //    of being stripped of its images on every run.
+  const pending = await collectImages(product);
 
   // 1. Upsert the product row.
   const productId = await upsertReturningId(
@@ -166,7 +290,7 @@ async function seedProduct(
       description: product.description,
       price_cents: product.priceCents,
       specs: product.specs,
-      is_published: true,
+      is_published: product.isPublished ?? true,
       is_featured: product.isFeatured,
       sort_order: index,
     },
@@ -199,17 +323,8 @@ async function seedProduct(
     colorIds[c.name] = data.id;
   }
 
-  // 3. Figure out which image belongs to which color (from variant featured
-  //    images), and collect the rest as generic gallery shots.
-  const colorImage: Record<string, string> = {};
-  for (const v of live.variants) {
-    if (!v.featured_image) continue;
-    const colorName = variantColorName(v.title, colorValues);
-    if (colorName && !colorImage[colorName]) {
-      colorImage[colorName] = v.featured_image.src;
-    }
-  }
-
+  // 3. Store the photos: per-color hero shots first, then a capped run of
+  //    generic gallery shots.
   const used = new Set<string>();
   const imageRows: {
     product_id: string;
@@ -219,38 +334,31 @@ async function seedProduct(
     sort_order: number;
   }[] = [];
   let order = 0;
-
-  // Per-color hero shots first.
-  for (const c of product.colors) {
-    const src = colorImage[c.name];
-    if (!src || used.has(src)) continue;
-    used.add(src);
-    const ext = extFromUrl(src);
-    const path = `${product.brandSlug}/${product.slug}/${slugify(c.name)}-1.${ext}`;
-    await downloadAndUpload(src, path);
-    imageRows.push({
-      product_id: productId,
-      color_id: colorIds[c.name],
-      storage_path: path,
-      alt: `${product.name}, ${c.name}`,
-      sort_order: order++,
-    });
-  }
-
-  // Generic gallery shots (cap so we don't pull dozens of images).
   let generic = 0;
-  for (const img of live.images) {
-    if (used.has(img.src) || generic >= 5) continue;
-    used.add(img.src);
-    generic++;
-    const ext = extFromUrl(img.src);
-    const path = `${product.brandSlug}/${product.slug}/gallery-${generic}.${ext}`;
-    await downloadAndUpload(img.src, path);
+  const seenColors = new Set<string>();
+
+  for (const img of pending) {
+    if (used.has(img.key)) continue;
+
+    let storagePath: string;
+    if (img.colorName) {
+      // One hero shot per color; extra photos for a color fall through as gallery.
+      if (seenColors.has(img.colorName)) continue;
+      seenColors.add(img.colorName);
+      storagePath = `${product.brandSlug}/${product.slug}/${slugify(img.colorName)}-1.${img.ext}`;
+    } else {
+      if (generic >= 5) continue; // don't pull dozens of images
+      generic++;
+      storagePath = `${product.brandSlug}/${product.slug}/gallery-${generic}.${img.ext}`;
+    }
+
+    used.add(img.key);
+    await uploadBytes(await img.load(), storagePath, img.ext);
     imageRows.push({
       product_id: productId,
-      color_id: null,
-      storage_path: path,
-      alt: `${product.name}`,
+      color_id: img.colorName ? colorIds[img.colorName] : null,
+      storage_path: storagePath,
+      alt: img.alt ?? product.name,
       sort_order: order++,
     });
   }
@@ -260,9 +368,17 @@ async function seedProduct(
     if (error) throw new Error(`insert images → ${error.message}`);
   }
 
-  console.log(
-    `✓ ${product.name} (${product.colors.length} colors, ${imageRows.length} images)`,
-  );
+  if (imageRows.length === 0) {
+    // Not a failure: a brand can go live before its photos arrive.
+    console.warn(
+      `! ${product.name} (${product.colors.length} colors, no photos yet — ` +
+        `add an \`images\` array or drop files in scripts/product-images/${product.brandSlug}/${product.slug}/)`,
+    );
+  } else {
+    console.log(
+      `✓ ${product.name} (${product.colors.length} colors, ${imageRows.length} images)`,
+    );
+  }
 }
 
 async function main() {
@@ -278,6 +394,20 @@ async function main() {
     } catch (err) {
       console.error(`✗ ${p.name}: ${err instanceof Error ? err.message : err}`);
     }
+  }
+
+  // Renaming or dropping a product leaves its old row behind, still published
+  // and still on /shop. Report those rather than delete them: the owner may
+  // have added a row by hand in the Supabase dashboard that isn't in this file.
+  const { data: liveRows } = await db.from('products').select('slug,name');
+  const knownSlugs = new Set(PRODUCTS.map(p => p.slug));
+  const orphans = (liveRows ?? []).filter(r => !knownSlugs.has(r.slug as string));
+  if (orphans.length > 0) {
+    console.warn(
+      `\n! ${orphans.length} product(s) in the database but not in seed-data.ts:\n` +
+        orphans.map(o => `    ${o.name} (${o.slug})`).join('\n') +
+        '\n  Delete them in the Supabase dashboard if they are leftovers.',
+    );
   }
 
   console.log(`\nDone: ${ok}/${PRODUCTS.length} products seeded.`);

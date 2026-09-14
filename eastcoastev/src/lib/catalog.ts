@@ -38,6 +38,18 @@ export function getBrands(): Promise<Brand[]> {
   return brandsPromise;
 }
 
+/**
+ * Brands that actually have something to show. RLS already hides unpublished
+ * products, so a brand whose whole lineup is still a draft would otherwise get
+ * a filter chip and a homepage link that lead to an empty shop page. Brands
+ * reappear on their own as soon as one of their products goes live.
+ */
+export async function getBrandsInStock(): Promise<Brand[]> {
+  const [brands, products] = await Promise.all([getBrands(), getProducts()]);
+  const stocked = new Set(products.map(p => p.brand_id));
+  return brands.filter(b => stocked.has(b.id));
+}
+
 export function getCategories(): Promise<Category[]> {
   categoriesPromise ??= (async () => {
     if (!supabase) return [];

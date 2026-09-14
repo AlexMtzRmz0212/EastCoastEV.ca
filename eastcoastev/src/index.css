@@ -25,6 +25,10 @@
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-serif: 'IBM Plex Serif', serif;
   --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Height of the announcement bar. AnnouncementBar.tsx puts .has-annbar on
+     <html> while it's showing; everything that clears the fixed header
+     offsets by this, so a dismissed bar costs nothing. */
+  --annbar-h: 0px;
 }
 
 [data-theme="light"] {
@@ -167,7 +171,7 @@ body::before{
    HEADER
    ============================================================ */
 header{
-  position:fixed;top:0;left:0;right:0;z-index:100;
+  position:fixed;top:var(--annbar-h);left:0;right:0;z-index:100;
   padding:20px 0;
   transition:background 0.4s ease, backdrop-filter 0.4s ease, padding 0.3s ease, box-shadow 0.3s ease;
 }
@@ -236,7 +240,8 @@ nav{display:flex;align-items:center;gap:4px;margin-left:auto}
    HERO
    ============================================================ */
 .hero{
-  position:relative;min-height:100svh;
+  position:relative;min-height:calc(100svh - var(--annbar-h));
+  margin-top:var(--annbar-h);
   display:flex;align-items:center;overflow:hidden;
 }
 .hero-bg{
@@ -819,7 +824,7 @@ footer{
 /* ============================================================
    CATALOG — SHOP & PRODUCT PAGES
    ============================================================ */
-.subpage{padding:150px 0 120px;background:var(--bg);min-height:70vh}
+.subpage{padding:calc(150px + var(--annbar-h)) 0 120px;background:var(--bg);min-height:70vh}
 .page-head{margin-bottom:48px}
 .page-title{
   font-family:var(--font-head);font-size:clamp(2.2rem,6vw,3.6rem);
@@ -1137,12 +1142,19 @@ footer{
   display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;
 }
 
-/* Locations — storefront card */
+/* Locations — storefront cards */
+.storefront-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:24px;margin-bottom:60px;
+}
 .storefront-card{
   border-radius:8px;overflow:hidden;
   background:var(--surface);border:1px solid var(--border);
-  padding:40px;margin-bottom:60px;
+  padding:40px;
+  transition:var(--transition);
 }
+.storefront-card:hover{border-color:var(--border-accent)}
+@media(max-width:580px){.storefront-card{padding:28px 22px}}
 .storefront-badge{
   display:inline-flex;align-items:center;gap:8px;
   font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;
@@ -1160,6 +1172,16 @@ footer{
 .storefront-line svg{width:16px;height:16px;flex-shrink:0;color:var(--accent)}
 
 /* Contact page */
+.contact-address{margin-bottom:16px}
+.contact-address:last-child{margin-bottom:0}
+.contact-address-city{
+  display:block;
+  font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:4px;
+}
+/* Its own line: JSX collapses the whitespace between the address and the link. */
+.contact-address .contact-link{display:block;margin-top:4px}
+.contact-hours-note{margin-top:8px;font-size:0.78rem;color:var(--text-dim)}
 .contact-grid{
   display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start;
 }
@@ -1214,12 +1236,52 @@ footer{
 @media(max-width:580px){.dev-credit{justify-content:flex-start}}
 
 /* ============================================================
-   CANEX FINANCING (homepage section)
+   FINANCING (homepage section: Financeit + CANEX)
    ============================================================ */
 .financing-section{padding:120px 0;background:var(--bg)}
+.financing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+@media(max-width:900px){.financing-grid{grid-template-columns:1fr}}
+.financing-card{
+  display:flex;flex-direction:column;
+  padding:40px 36px;
+  background:var(--surface);
+  border:1px solid var(--border);border-radius:8px;
+  transition:var(--transition);
+}
+.financing-card:hover{border-color:var(--border-accent)}
+/* Push each card's button to the bottom so the two line up when the copy
+   lengths differ. */
+.financing-card .btn{align-self:flex-start;margin-top:auto}
+@media(max-width:580px){.financing-card{padding:28px 22px}}
+.financing-card-head{margin-bottom:2rem}
+.financing-badge{
+  display:inline-block;margin-bottom:1rem;
+  font-family:var(--font-head);font-size:0.56rem;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;
+  background:var(--accent);color:var(--on-accent);
+  border-radius:100px;padding:4px 10px;
+}
+.financing-badge.alt{
+  background:transparent;color:var(--text-muted);
+  border:1px solid var(--border);
+}
+/* Scoped to the card head: the feature rows below reuse .service-feature-text,
+   which has its own smaller h3 and would otherwise be overridden. */
+.financing-card-head h3{
+  font-family:var(--font-head);font-size:clamp(1.4rem,3vw,1.9rem);
+  font-weight:900;line-height:1.15;margin-bottom:0.75rem;
+}
+.financing-lead{
+  font-size:1rem;color:var(--text-muted);font-weight:300;
+  font-family:var(--font-serif);font-style:italic;
+}
+.financing-fineprint{
+  margin-top:1.25rem;font-size:0.72rem;line-height:1.5;color:var(--text-dim);
+}
 .financing-banner{
-  position:relative;display:flex;align-items:center;justify-content:center;
-  padding:40px;min-height:360px;
+  display:flex;align-items:center;justify-content:center;
+  padding:28px;margin-bottom:2rem;
+  border-radius:var(--radius);
   background:var(--surface2);
   background-image:
     linear-gradient(rgba(181,245,60,0.03) 1px,transparent 1px),
@@ -1227,8 +1289,60 @@ footer{
   background-size:40px 40px;
 }
 .financing-banner img{
-  display:block;width:100%;height:auto;max-width:460px;
+  display:block;width:100%;height:auto;max-width:320px;
   border-radius:var(--radius);
   box-shadow:0 16px 48px rgba(0,0,0,0.45);
 }
-@media(max-width:580px){.financing-banner{padding:24px;min-height:240px}}
+@media(max-width:580px){.financing-banner{padding:18px}}
+
+/* ============================================================
+   ANNOUNCEMENT BAR (site-wide, above the header)
+   ============================================================ */
+:root.has-annbar{--annbar-h:44px}
+.annbar{
+  position:fixed;top:0;left:0;right:0;
+  /* Under the mobile nav overlay (99) on purpose, so an open menu covers it. */
+  z-index:98;
+  height:var(--annbar-h);
+  background:var(--surface);
+  border-bottom:1px solid var(--border-accent);
+}
+.annbar-inner{
+  height:100%;display:flex;align-items:center;justify-content:center;gap:12px;
+}
+.annbar-cta{
+  display:flex;align-items:center;gap:10px;min-width:0;
+  color:var(--text);font-size:0.78rem;
+  transition:var(--transition);
+}
+.annbar-cta:hover{color:var(--accent)}
+.annbar-tag{
+  flex-shrink:0;
+  font-family:var(--font-head);font-size:0.56rem;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;
+  background:var(--accent);color:var(--on-accent);
+  border-radius:100px;padding:3px 9px;
+}
+.annbar-msg{
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.annbar-msg strong{color:var(--accent);font-weight:600}
+.annbar-cta:hover .annbar-msg strong{color:inherit}
+.annbar-arrow{flex-shrink:0;color:var(--accent);transition:var(--transition)}
+.annbar-cta:hover .annbar-arrow{transform:translateX(3px);color:inherit}
+.annbar-close{
+  flex-shrink:0;position:absolute;right:16px;
+  width:28px;height:28px;border-radius:var(--radius);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-dim);transition:var(--transition);
+}
+.annbar-close:hover{color:var(--text);background:var(--border)}
+.annbar-close svg{width:14px;height:14px}
+
+@media(max-width:760px){
+  :root.has-annbar{--annbar-h:40px}
+  /* Drop the badge rather than let the sentence truncate on a phone. */
+  .annbar-tag{display:none}
+  .annbar-inner{justify-content:flex-start;padding-right:44px}
+  .annbar-cta{font-size:0.72rem}
+}

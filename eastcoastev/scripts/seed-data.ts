@@ -8,10 +8,28 @@
 // `source` points at the manufacturer's Shopify store; scripts/seed.ts fetches
 // live product JSON from there to pull official photos and re-host them in
 // Supabase Storage (no hotlinking).
+//
+// Not every manufacturer exposes a usable feed. Throne's store lists its e-motos
+// without color options or per-variant photos, and Surron Canada's product feed
+// is almost entirely spare parts (the complete bikes live on custom pages). Those
+// products use `images` instead: drop files in scripts/product-images/ or give
+// direct URLs. A product with neither seeds with no photos and logs a warning.
 
 export interface SeedColor {
   name: string;
   hex: string;
+}
+
+// A manually supplied photo, for brands whose store has no usable Shopify feed.
+// Exactly one of `file` or `url` must be set.
+export interface SeedImage {
+  /** Path under scripts/product-images/, e.g. 'throne/throne-strike/black-1.webp'. */
+  file?: string;
+  /** Or a direct image URL to download and re-host. */
+  url?: string;
+  /** Binds the photo to a swatch. Must match one of the product's SeedColor.name. */
+  color?: string;
+  alt?: string;
 }
 
 export interface SeedProduct {
@@ -22,10 +40,22 @@ export interface SeedProduct {
   tagline: string;
   description: string;
   priceCents: number | null;
+  /**
+   * Defaults to true. Set false to seed a product as a draft: the row exists
+   * but RLS hides it from the site, so specs can be checked before it's live.
+   */
+  isPublished?: boolean;
   isFeatured: boolean;
   specs: Record<string, string>;
   colors: SeedColor[];
-  source: { store: StoreKey; handle: string };
+  /**
+   * Where the photos come from. Pick one:
+   *   `source` - scrape the manufacturer's Shopify product JSON (preferred).
+   *   `images` - manual files/URLs, for stores with no usable product feed.
+   * Omit both to seed the product row with no photos yet.
+   */
+  source?: { store: StoreKey; handle: string };
+  images?: SeedImage[];
 }
 
 export type StoreKey = 'niu' | 'eridepro' | 'yozma' | 'univelo';
@@ -70,6 +100,22 @@ export const BRANDS = [
     website_url: 'https://www.univelo.ca',
     sort_order: 4,
   },
+  {
+    slug: 'throne',
+    name: 'Throne',
+    description:
+      'Southern California builder of big-wheel e-bikes and e-motos, street-culture styling with serious power under it.',
+    website_url: 'https://thronecycles.com',
+    sort_order: 5,
+  },
+  {
+    slug: 'sur-ron',
+    name: 'Sur-Ron',
+    description:
+      'The benchmark in lightweight electric off-road. Light Bee, Ultra Bee, and Storm Bee built for trail, track, and everything between.',
+    website_url: 'https://surron.ca',
+    sort_order: 6,
+  },
 ];
 
 export const CATEGORIES = [
@@ -92,6 +138,27 @@ const C = {
   sage: { name: 'Sage', hex: '#9caf88' },
   pink: { name: 'Pink', hex: '#e8a0bf' },
   chameleon: { name: 'Chameleon', hex: '#6a7fdb' },
+  blackGold: { name: 'Black Gold', hex: '#1c1a17' },
+  whiteGold: { name: 'White Gold', hex: '#ece2cf' },
+  carbonBlack: { name: 'Carbon Black', hex: '#15171a' },
+  desertBrown: { name: 'Desert Brown', hex: '#8a6f4e' },
+  phantomPurple: { name: 'Phantom Purple', hex: '#4b3a63' },
+  sageGreen: { name: 'Sage Green', hex: '#9caf88' },
+  yellow: { name: 'Yellow', hex: '#e3b505' },
+  green: { name: 'Green', hex: '#4a8a3c' },
+  // Throne name their colourways; keep their names on the swatches.
+  blackStrike: { name: 'Black Strike', hex: '#15151a' },
+  cShadowBlack: { name: 'C Shadow Black', hex: '#26262b' },
+  crimsonShadow: { name: 'Crimson Shadow', hex: '#8c1c24' },
+  greyGold: { name: 'Grey Gold', hex: '#8a8377' },
+  whiteSavage: { name: 'White Savage', hex: '#ededea' },
+  concreteGrey: { name: 'Concrete Grey', hex: '#6f7276' },
+  midnightBlue: { name: 'Midnight Blue', hex: '#1b2a4a' },
+  diabloRed: { name: 'Diablo Red', hex: '#a51f27' },
+  graphiteGrey: { name: 'Graphite Grey', hex: '#4a4d52' },
+  blackOro: { name: 'Black Oro', hex: '#1a1814' },
+  armyGreen: { name: 'Army Green', hex: '#4a5340' },
+  whiteLux: { name: 'White Lux', hex: '#f0efeb' },
 };
 
 export const PRODUCTS: SeedProduct[] = [
@@ -278,7 +345,13 @@ export const PRODUCTS: SeedProduct[] = [
     isFeatured: false,
     specs: { Battery: '72V 50Ah', Motor: 'High-output mid-drive', Seat: 'Long / short options', Brakes: 'Racing hydraulic disc' },
     colors: [C.black],
-    source: { store: 'eridepro', handle: 'pro-ss-3-0' },
+    // E Ride Pro pulled the complete bikes from their public product feed, so
+    // this handle now 404s. Photos recovered from our own storage and committed
+    // under scripts/product-images/ instead.
+    images: [
+      { file: 'e-ride-pro/e-ride-pro-ss-3/gallery-1.png' },
+      { file: 'e-ride-pro/e-ride-pro-ss-3/gallery-2.jpg' },
+    ],
   },
   {
     brandSlug: 'e-ride-pro',
@@ -395,5 +468,308 @@ export const PRODUCTS: SeedProduct[] = [
     specs: { Motor: 'Bafang mid-drive', Battery: 'Bafang 15Ah', 'Tire size': '20" x 3.5"', 'Cargo ready': 'Yes' },
     colors: [C.chameleon],
     source: { store: 'univelo', handle: 'aima-big-sur-sport-20-e-bike-copy' },
+  },
+
+  // ── Throne ──────────────────────────────────────────────────
+  //
+  // Model names come from Throne's own product feed. Note "Strike" is one of
+  // their colourway names (Black Strike), not a model: the bikes are the Goon,
+  // the Rhino, the Shadow and the SRPNT.
+  //
+  // Their feed lists each colour as its own product rather than as variants of
+  // one, so the usual `source` scrape can't group them. The per-colour photos
+  // are pulled by URL instead and re-hosted in Supabase Storage on seed.
+  //
+  // OWNER: this is Throne's full line-up. Delete the ones the shop doesn't
+  // carry, and check the specs, which are a researched starting point only.
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-bikes',
+    slug: 'throne-goon',
+    name: 'The Goon',
+    tagline: 'Big wheels, bigger presence.',
+    description:
+      'Throne’s signature big-wheel e-bike. A moto stance on 26" wheels, upright and unmistakable, built for looking good at low speed around town.',
+    priceCents: null,
+    isFeatured: true,
+    specs: { Style: 'Big-wheel e-bike', Wheels: '26"', Use: 'Street & commuter' },
+    colors: [C.blackStrike, C.cShadowBlack],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/BlackStrike-26x2.jpg?v=1774548617&width=1400', color: 'Black Strike' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/Shadow1_3696dc08-f782-40e2-a0f3-a9d642992e03.jpg?v=1715621758&width=1400', color: 'C Shadow Black' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-bikes',
+    slug: 'throne-goon-runner',
+    name: 'The Goon Runner',
+    tagline: 'The Goon, quicker.',
+    description:
+      'A faster, sharper take on the Goon platform for riders who want the same silhouette with more urgency behind it.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Style: 'Big-wheel e-bike', Use: 'Street & commuter' },
+    colors: [C.crimsonShadow],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/TGR-DiabloRed1.jpg?v=1768934329&width=1400', color: 'Crimson Shadow' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-bikes',
+    slug: 'throne-rhino',
+    name: 'Rhino',
+    tagline: 'Fat tyres, flat out.',
+    description:
+      'The wide-tyre one. Planted, heavy-set and happy on loose ground as well as pavement.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Style: 'Fat-tyre e-bike', Use: 'Street & light off-road' },
+    colors: [C.blackStrike],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/BlackRhix2_1.jpg?v=1766789973&width=1400', color: 'Black Strike' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'throne-shadow-48v',
+    name: 'Shadow 48V',
+    tagline: 'The way into e-motos.',
+    description:
+      'A compact electric moto that shrugs off curbs and trails alike. Light enough to flick through traffic, punchy enough to keep up with anything.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Motor: '3,000W peak', Battery: '48V 23.4Ah', 'Top speed': 'Up to 60 km/h' },
+    colors: [C.black, C.white, C.red],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/S48-Black2.jpg?v=1785261294&width=1400', color: 'Black' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/S48-White2.jpg?v=1779733408&width=1400', color: 'White' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/S48-Red2.jpg?v=1779732892&width=1400', color: 'Red' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'throne-shadow-60v',
+    name: 'Shadow 60V',
+    tagline: 'More volts, more shove.',
+    description:
+      'The same compact Shadow chassis on a 60V pack, for riders who found the 48V a little polite.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Battery: '60V', Style: 'Electric moto', Use: 'Street & off-road' },
+    colors: [C.black, C.white, C.blue],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/S60-BLack2.jpg?v=1780507218&width=1400', color: 'Black' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/S60-White2.jpg?v=1779733063&width=1400', color: 'White' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/S60-Blue2.jpg?v=1780506755&width=1400', color: 'Blue' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'throne-shadow-72v',
+    name: 'Shadow 72V',
+    tagline: 'The quick one.',
+    description:
+      'Top of the Shadow range. A 72V pack in the same compact frame, which is as fast as this platform gets.',
+    priceCents: null,
+    isFeatured: true,
+    specs: { Battery: '72V', Style: 'Electric moto', Use: 'Street & off-road' },
+    colors: [C.black, C.white, C.greyGold],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/S72-Black2.jpg?v=1779733258&width=1400', color: 'Black' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/S72-White2.jpg?v=1779733192&width=1400', color: 'White' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/S72-Grey2.jpg?v=1780506875&width=1400', color: 'Grey Gold' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'throne-shadow-lx4',
+    name: 'Shadow LX4',
+    tagline: 'Shadow, dressed up.',
+    description:
+      'The LX trim of the Shadow, finished in gold against black or white. Same compact e-moto underneath, more of an occasion to look at.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Style: 'Electric moto', Trim: 'LX4', Use: 'Street & off-road' },
+    colors: [C.blackGold, C.whiteGold],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/V2-B2.jpg?v=1783534844&width=1400', color: 'Black Gold' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/V1-W2.jpg?v=1783529157&width=1400', color: 'White Gold' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'throne-shadow-lx6',
+    name: 'Shadow LX6',
+    tagline: 'The top Shadow trim.',
+    description:
+      'The furthest Throne take the Shadow: the LX finish with the strongest drivetrain in the range behind it.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Style: 'Electric moto', Trim: 'LX6', Use: 'Street & off-road' },
+    colors: [C.blackGold, C.whiteGold],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/V1-B2.jpg?v=1785353514&width=1400', color: 'Black Gold' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/V1-W22.jpg?v=1785354346&width=1400', color: 'White Gold' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'throne-srpnt-x3',
+    name: 'SRPNT X3',
+    tagline: 'Full-size, full send.',
+    description:
+      'Throne’s full-size electric dirt bike. Long-travel suspension, real power, and five colourways to pick a fight in.',
+    priceCents: null,
+    isFeatured: true,
+    specs: { Style: 'Electric dirt bike', Use: 'Track & trail', Suspension: 'Long travel' },
+    colors: [C.whiteSavage, C.concreteGrey, C.blackStrike, C.midnightBlue, C.diabloRed],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/WhiteSavagex2_02eaac2f-8172-4ce8-b852-80c299413ce5.jpg?v=1730497544&width=1400', color: 'White Savage' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/GreyConcretex2_6e3f98ff-58a8-4680-88e1-6ff32cefd493.jpg?v=1753924993&width=1400', color: 'Concrete Grey' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/Screenshot_2025-06-20_at_6.34.32_PM_1.png?v=1753924981&width=1400', color: 'Black Strike' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/Screenshot_2025-06-19_at_2.02.04_PM.png?v=1753924998&width=1400', color: 'Midnight Blue' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/SRPNT-DiabloRed1_1_fa079214-17b1-4985-9d40-489a5e38481a.jpg?v=1753925002&width=1400', color: 'Diablo Red' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'throne-srpnt-x8',
+    name: 'SRPNT X8',
+    tagline: 'The bigger SRPNT.',
+    description:
+      'A step up from the X3 in both size and output, for riders who have outgrown their first e-moto.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Style: 'Electric dirt bike', Use: 'Track & trail' },
+    colors: [C.blackStrike, C.midnightBlue, C.graphiteGrey],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/X8Black-2.jpg?v=1778033049&width=1400', color: 'Black Strike' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/X8MidnightBlue-1_94da9b5b-4fdb-4bb7-ad00-d860c5e9cb1d.jpg?v=1780336970&width=1400', color: 'Midnight Blue' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/X8GraphiteGrey-2_4f098fde-0587-4045-9f87-1960c3202ddf.jpg?v=1780337108&width=1400', color: 'Graphite Grey' },
+    ],
+  },
+  {
+    brandSlug: 'throne',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'throne-srpnt-z27',
+    name: 'SRPNT Z27',
+    tagline: 'The flagship SRPNT.',
+    description:
+      'The top of the SRPNT line, in Black Oro, Army Green or White Lux. The most bike Throne currently make.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Style: 'Electric dirt bike', Use: 'Track & trail' },
+    colors: [C.blackOro, C.armyGreen, C.whiteLux],
+    images: [
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/Z27Black-2_1f5dc724-efbc-459c-910a-4a5a7bd0e82c.jpg?v=1778034241&width=1400', color: 'Black Oro' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/Z27ForestGreen-1_078b9910-b42b-4cc0-a70c-e657262e0765.jpg?v=1780336885&width=1400', color: 'Army Green' },
+      { url: 'https://cdn.shopify.com/s/files/1/0708/7999/files/Z27White-2.jpg?v=1777682621&width=1400', color: 'White Lux' },
+    ],
+  },
+
+  // ── Sur-Ron ─────────────────────────────────────────────────
+  //
+  // Surron Canada's product feed carries spare parts only; the complete bikes
+  // live on custom /pages/* routes. The per-colour shots below come from the
+  // cut-out studio images their colour picker uses. Those ship with an alpha
+  // channel, which left the card tile's grey showing where every other product
+  // has a white box, so they were flattened onto white, trimmed and committed
+  // under scripts/product-images/. The action photography follows as generic
+  // gallery shots.
+  //
+  // OWNER: specs here are deliberately thin. Please fill them in from the
+  // dealer sheets before quoting anything off this page.
+  {
+    brandSlug: 'sur-ron',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'sur-ron-light-bee-x',
+    name: 'Light Bee X',
+    tagline: 'The one that started it all.',
+    description:
+      'The bike that defined lightweight electric off-road. Genuine trail performance in a frame light enough to pick up and point wherever you want it.',
+    priceCents: null,
+    isFeatured: true,
+    specs: { Style: 'Lightweight electric off-road', Battery: '60V lithium', Use: 'Trail & off-road' },
+    colors: [C.carbonBlack, C.white, C.phantomPurple, C.sageGreen],
+    images: [
+      { file: 'sur-ron/sur-ron-light-bee-x/carbon-black.jpg', color: 'Carbon Black' },
+      { file: 'sur-ron/sur-ron-light-bee-x/white.jpg', color: 'White' },
+      { file: 'sur-ron/sur-ron-light-bee-x/phantom-purple.jpg', color: 'Phantom Purple' },
+      { file: 'sur-ron/sur-ron-light-bee-x/sage-green.jpg', color: 'Sage Green' },
+      { url: 'https://cdn.shopify.com/s/files/1/0540/6644/6508/files/26LB1.webp?v=1779721410&width=1400' },
+      { url: 'https://cdn.shopify.com/s/files/1/0540/6644/6508/files/26LB7.webp?v=1779723697&width=1400' },
+      { url: 'https://cdn.shopify.com/s/files/1/0540/6644/6508/files/26LB9.webp?v=1779723745&width=1400' },
+    ],
+  },
+  {
+    brandSlug: 'sur-ron',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'sur-ron-ultra-bee',
+    name: 'Ultra Bee',
+    tagline: 'Full-size performance, electric.',
+    description:
+      'Sur-Ron’s midweight electric motorcycle: a real full-size chassis with the power and suspension travel to match, and no engine noise to announce it.',
+    priceCents: null,
+    isFeatured: true,
+    specs: { Style: 'Midweight electric motorcycle', Wheels: '19" / 18"', Use: 'Trail & dual-sport' },
+    colors: [C.carbonBlack, C.desertBrown],
+    images: [
+      { file: 'sur-ron/sur-ron-ultra-bee/carbon-black.jpg', color: 'Carbon Black' },
+      { file: 'sur-ron/sur-ron-ultra-bee/desert-brown.jpg', color: 'Desert Brown' },
+      { url: 'https://cdn.shopify.com/s/files/1/0540/6644/6508/files/26UB3.jpg?v=1779473348&width=1400' },
+      { url: 'https://cdn.shopify.com/s/files/1/0540/6644/6508/files/26UB5.jpg?v=1779473411&width=1400' },
+      { url: 'https://cdn.shopify.com/s/files/1/0540/6644/6508/files/26UB6.jpg?v=1779473547&width=1400' },
+    ],
+  },
+  {
+    brandSlug: 'sur-ron',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'sur-ron-storm-bee',
+    name: 'Storm Bee',
+    tagline: 'The heavy hitter.',
+    description:
+      'The biggest bike in the range: full-size motocross proportions, serious torque, and the chassis to put it down. Built for riders who want no compromise.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Style: 'Full-size electric motocross', Drive: '520 chain', Use: 'Motocross & trail' },
+    colors: [C.white],
+    // Surron Canada's Storm Bee page predates their cut-out studio shots, so
+    // this is the side-on view cropped out of their three-angle studio photo
+    // and committed here, to keep the card consistent with the rest.
+    images: [
+      { file: 'sur-ron/sur-ron-storm-bee/profile.jpg', color: 'White' },
+      { url: 'https://cdn.shopify.com/s/files/1/0604/9356/2061/files/20220425-0V8A4181-Edit_600x600.jpg?v=1667577845' },
+      { url: 'https://cdn.shopify.com/s/files/1/0604/9356/2061/files/20220425-0V8A4129-Edit_600x600.jpg?v=1667578231' },
+    ],
+  },
+  {
+    brandSlug: 'sur-ron',
+    categorySlug: 'e-dirt-bikes',
+    slug: 'sur-ron-hyper-bee',
+    name: 'Hyper Bee',
+    tagline: 'Small frame, real bite.',
+    description:
+      'The compact one in the family, sized for younger and smaller riders but built with the same engineering, not a toy version of it.',
+    priceCents: null,
+    isFeatured: false,
+    specs: { Style: 'Compact electric off-road', Battery: '50.4V lithium', Wheels: '12"' },
+    colors: [C.blue, C.yellow, C.green],
+    images: [
+      { file: 'sur-ron/sur-ron-hyper-bee/blue.jpg', color: 'Blue' },
+      { file: 'sur-ron/sur-ron-hyper-bee/yellow.jpg', color: 'Yellow' },
+      { file: 'sur-ron/sur-ron-hyper-bee/green.jpg', color: 'Green' },
+      { url: 'https://cdn.shopify.com/s/files/1/0540/6644/6508/files/2026HyperBee_1.jpg?v=1773933804&width=1400' },
+      { url: 'https://cdn.shopify.com/s/files/1/0540/6644/6508/files/2026HyperBee_3.jpg?v=1773933832&width=1400' },
+      { url: 'https://cdn.shopify.com/s/files/1/0540/6644/6508/files/2026HyperBee_5.jpg?v=1773933855&width=1400' },
+    ],
   },
 ];
