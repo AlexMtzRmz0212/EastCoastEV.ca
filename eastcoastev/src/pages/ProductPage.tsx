@@ -118,6 +118,12 @@ export default function ProductPage() {
         </div>
 
         <SpecsTable specs={product.specs} />
+
+        <p className="product-warranty-note reveal">
+          Covered by {product.brand.name}'s manufacturer warranty. See our{' '}
+          <Link to="/warranty">Warranty page</Link> for coverage details and the link
+          to {product.brand.name}'s official policy.
+        </p>
       </div>
     </main>
   );

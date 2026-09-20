@@ -1039,6 +1039,13 @@ footer{
 .spec-key{color:var(--text-muted)}
 .spec-value{color:var(--text);font-weight:500;text-align:right}
 
+.product-warranty-note{
+  margin-top:-56px;margin-bottom:80px;
+  color:var(--text-muted);font-size:0.88rem;
+}
+.product-warranty-note a{color:var(--accent);transition:var(--transition)}
+.product-warranty-note a:hover{opacity:0.75}
+
 /* Empty state */
 .empty-state{
   text-align:center;padding:80px 24px;
@@ -1080,6 +1087,12 @@ footer{
   line-height:1.25;margin-bottom:10px;
 }
 .feature-card p{color:var(--text-muted);font-size:0.88rem;line-height:1.6}
+
+.service-warranty-note{
+  margin-top:20px;color:var(--text-muted);font-size:0.9rem;
+}
+.service-warranty-note a{color:var(--accent);transition:var(--transition)}
+.service-warranty-note a:hover{opacity:0.75}
 
 /* Prose (About story) */
 .prose{max-width:64ch}

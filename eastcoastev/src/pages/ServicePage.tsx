@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import ServiceSection from '../components/ServiceSection';
 import CtaBand from '../components/CtaBand';
 import { useReveal } from '../hooks/useReveal';
@@ -105,6 +106,12 @@ export default function ServicePage() {
             </div>
           ))}
         </div>
+
+        <p className="service-warranty-note reveal">
+          Still under manufacturer warranty? Check our{' '}
+          <Link to="/warranty">Warranty page</Link> for coverage by brand before
+          booking a paid repair.
+        </p>
 
         <CtaBand
           eyebrow="Ready When You Are"
