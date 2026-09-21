@@ -94,6 +94,15 @@ export default function Hero() {
             </Link>
             <Link to="/contact" className="btn btn-outline">Schedule a Test Ride</Link>
           </div>
+
+          <Link to="/warranty" className="hero-warranty-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+            Every Ride Backed by Manufacturer Warranty
+            <span className="hero-warranty-badge-arrow" aria-hidden="true">&rarr;</span>
+          </Link>
         </div>
       </div>
 
